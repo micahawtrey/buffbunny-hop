@@ -1,7 +1,12 @@
-# volumes:
+volumes:
+    mongo-data:
+        external: true
+
 services:
     fastapi:
         environment:
+            DATABASE_URL: mongodb://example_user:secret@mongo
+            DB_NAME: mongo
             CORS_HOST: http://localhost:5173
         build:
             context: api
@@ -23,3 +28,11 @@ services:
             VITE_API_HOST: http://localhost:8000
         ports:
             - "5173:5173"
+
+    mongo:
+        image: mongo:5
+        volumes:
+            - mongo-data:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: example_user
+            MONGO_INITDB_ROOT_PASSWORD: secret
