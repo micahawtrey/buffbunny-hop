@@ -8,6 +8,7 @@ services:
             DATABASE_URL: mongodb://example_user:secret@mongo
             DB_NAME: mongo
             CORS_HOST: http://localhost:5173
+            SIGNING_KEY: f8c7dcb73b3b8dff6b242c870e95f285ff3b3be284f666468d09e9e7cb4d1c36
         build:
             context: api
             dockerfile: Dockerfile.dev
