@@ -10,7 +10,7 @@ class AccountIn(BaseModel):
     full_name: str
     username: str
     email: str
-    hashed_password: str
+    password: str
     workouts: List[WorkoutOut]
 
 class AccountOut(AccountIn):
@@ -26,12 +26,11 @@ class AccountQueries():
         return AccountOut(**account)
 
     def create(self, info: AccountIn, hashed_password: str) -> AccountOut:
-        #checks if an account with the same username or email already exists
         if accounts.find_one({"username": info.username}) is not None:
             raise DuplicateAccountError(f"Account with username {info.username} already exists.")
 
         account = info.dict()
-        account['hashed_password'] = info.hashed_password
+        account['password'] = hashed_password
         result = accounts.insert_one(account)
         account["id"] = str(result.inserted_id)
         return AccountOut(**account)
