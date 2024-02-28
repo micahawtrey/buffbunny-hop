@@ -43,6 +43,9 @@ class AccountOut(BaseModel):
     email: str
     workouts: List[WorkoutOut]
 
+class Account(AccountOut):
+    hashed_password: str
+    
 #routers
 class AccountForm(BaseModel):
     username: str
@@ -53,6 +56,3 @@ class AccountToken(Token):
 
 class HttpError(BaseModel):
     detail: str
-
-class Account(AccountOut):
-    hashed_password: str
