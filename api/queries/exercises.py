@@ -1,5 +1,5 @@
 from .queries import Queries
-from models import ExerciseOut
+from models import ExerciseOut, ExerciseIn
 from typing import List
 
 
@@ -14,3 +14,9 @@ class ExerciseQueries(Queries):
             exercises_list.append(exercise)
         print("AHHHHHHHHHHHHHH Exercise List", exercises_list)
         return exercises_list
+
+    def create_exercise(self, exercise_in: ExerciseIn):
+        exercise_dict = exercise_in.dict()
+        self.collection.insert_one(exercise_dict)
+        exercise_dict['id'] = str(exercise_dict['_id'])
+        return ExerciseOut(**exercise_dict)
