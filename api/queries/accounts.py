@@ -28,23 +28,3 @@ class AccountQueries(Queries):
         self.collection.insert_one(account)
         account["id"] = str(account["_id"])
         return Account(**account)
-
-    def delete_one(self, account_id: str) -> bool:
-        result = self.collection.delete_one({"_id": account_id})
-        return result.deleted_count > 0
-
-    def update(self, account_id: str, account_in: AccountIn):
-        query = {
-            '_id': ObjectId(account_id),
-            'account_id': account_id
-        }
-        changes = account_in.dict()
-        res = self.collection.update_one(query, {'$set': changes})
-        if res.matched_count >= 1:
-            changes['id'] = account_id
-            changes['account_id']
-            return changes
-
-    def delete_one(self, account_id: str) -> bool:
-        result = self.collection.delete_one({"_id": account_id})
-        return result.deleted_count > 0
