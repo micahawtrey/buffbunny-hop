@@ -17,7 +17,7 @@ class AccountQueries(Queries):
         return Account(**account)
 
     def create(self, info: AccountIn, hashed_password: str):
-        if self.get({"username": info.username}) is not None:
+        if self.get({info.username}) is not None:
             raise DuplicateAccountError(f"Account with username {info.username} already exists.")
 
         account = info.dict()
@@ -26,3 +26,7 @@ class AccountQueries(Queries):
         self.collection.insert_one(account)
         account["id"] = str(account["_id"])
         return Account(**account)
+
+    def delete_one(self, account_id: str) -> bool:
+        result = self.collection.delete_one({"_id": account_id})
+        return result.deleted_count > 0

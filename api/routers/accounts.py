@@ -12,7 +12,7 @@ from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
 )
-from models import AccountForm,AccountToken,HttpError, AccountIn
+from models import AccountForm,AccountToken,HttpError, AccountIn, DeleteStatus
 
 router = APIRouter()
 
@@ -35,3 +35,14 @@ async def create_account(
     form = AccountForm(username=info.username, password=info.password)
     token = await authenticator.login(response, request, form, repo)
     return AccountToken(account=account, **token.dict())
+
+@router.delete('/api/projects/{account_id}', response_model=DeleteStatus)
+def delete_account(
+    account_id: str,
+    account_queries: AccountQueries = Depends()
+) -> DeleteStatus:
+    deletion_success = account_queries.delete_one(account_id)
+    if deletion_success:
+        return DeleteStatus(success=True, message="Account deleted successfully.")
+    else:
+        raise HTTPException(status_code=404, detail="Account not found.")
