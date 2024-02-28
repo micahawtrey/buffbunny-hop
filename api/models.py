@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import List
 from jwtdown_fastapi.authentication import Token
 
+
 class Exercise(BaseModel):
     name: str
     set: str
@@ -45,7 +46,7 @@ class AccountOut(BaseModel):
 
 class Account(AccountOut):
     hashed_password: str
-    
+
 #routers
 class AccountForm(BaseModel):
     username: str
@@ -56,3 +57,10 @@ class AccountToken(Token):
 
 class HttpError(BaseModel):
     detail: str
+
+
+class DeleteStatus(BaseModel):
+    success: bool
+    message: str
+
+#just needed to add something to test this git push

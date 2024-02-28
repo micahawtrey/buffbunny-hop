@@ -12,7 +12,8 @@ from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
 )
-from models import AccountForm, AccountToken, HttpError, AccountIn, AccountOut
+from models import AccountForm, AccountToken, HttpError, AccountIn, AccountOut, DeleteStatus
+
 
 router = APIRouter()
 
@@ -48,3 +49,15 @@ def update_account(
     if account is None:
         raise HTTPException(status_code=404, detail="Account not found")
     return account
+
+
+@router.delete('/api/projects/{account_id}', response_model=DeleteStatus)
+def delete_account(
+    account_id: str,
+    account_queries: AccountQueries = Depends()
+) -> DeleteStatus:
+    deletion_success = account_queries.delete_one(account_id)
+    if deletion_success:
+        return DeleteStatus(success=True, message="Account deleted successfully.")
+    else:
+        raise HTTPException(status_code=404, detail="Account not found.")
