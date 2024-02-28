@@ -14,7 +14,6 @@ from queries.accounts import (
 )
 from models import AccountForm, AccountToken, HttpError, AccountIn, AccountOut, DeleteStatus
 
-
 router = APIRouter()
 
 

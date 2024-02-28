@@ -29,6 +29,10 @@ class AccountQueries(Queries):
         account["id"] = str(account["_id"])
         return Account(**account)
 
+    def delete_one(self, account_id: str) -> bool:
+        result = self.collection.delete_one({"_id": account_id})
+        return result.deleted_count > 0
+
     def update(self, account_id: str, account_in: AccountIn):
         query = {
             '_id': ObjectId(account_id),
@@ -40,7 +44,7 @@ class AccountQueries(Queries):
             changes['id'] = account_id
             changes['account_id']
             return changes
-        
+
     def delete_one(self, account_id: str) -> bool:
         result = self.collection.delete_one({"_id": account_id})
         return result.deleted_count > 0
