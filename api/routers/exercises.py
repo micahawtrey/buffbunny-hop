@@ -6,6 +6,7 @@ from fastapi import (
     APIRouter,
     Request,
 )
+from authenticator import authenticator
 from typing import List
 from queries.exercises import ExerciseQueries
 from models import ExerciseOut, ExerciseIn
@@ -26,3 +27,15 @@ def create_exercise(
 ):
     new_exercise = repo.create_exercise(exercise_in)
     return new_exercise
+
+@router.put("/api/exercises/{exercise_id}", response_model=ExerciseOut)
+def update_exercise(
+    exercise_id: str,
+    exercise_in: ExerciseIn,
+    account_id: dict = Depends(authenticator.get_account_data),
+    queries: ExerciseQueries = Depends()
+):
+    exercise = queries.update(exercise_id=exercise_id, account_id=account_id['id'], exercise_in=exercise_in)
+    if exercise is None:
+        raise HTTPException(status_code=404, detail="Exercise not found")
+    return exercise

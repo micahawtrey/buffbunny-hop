@@ -31,7 +31,7 @@ class AccountQueries(Queries):
 
     def update(self, account_id: str, account_in: AccountIn):
         query = {
-            'id': ObjectId{account_id}
+            'id': ObjectId(account_id),
             'account_id': account_id
         }
         changes = account_in.dict()
