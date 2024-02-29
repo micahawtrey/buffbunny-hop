@@ -2,6 +2,8 @@ from pydantic import BaseModel
 from typing import List
 from jwtdown_fastapi.authentication import Token
 
+class Error(BaseModel):
+    message: str
 
 class Exercise(BaseModel):
     name: str

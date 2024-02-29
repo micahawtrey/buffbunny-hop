@@ -6,13 +6,13 @@ from fastapi import (
     APIRouter,
     Request,
 )
-from typing import List
+from typing import List, Union
 from queries.exercises import ExerciseQueries
-from models import ExerciseOut, ExerciseIn
+from models import ExerciseOut, ExerciseIn, Error
 
 router = APIRouter()
 
-@router.get("/api/exercises", response_model=List[ExerciseOut])
+@router.get("/api/exercises", response_model=Union[List[ExerciseOut], Error])
 def get_all_exercises(
     repo: ExerciseQueries = Depends()
 ):

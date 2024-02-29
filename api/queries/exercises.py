@@ -8,12 +8,14 @@ class ExerciseQueries(Queries):
     COLLECTION = "exercises"
 
     def get_all_exercises(self):
-        exercises_list = []
-        for exercise in self.collection.find():
-            exercise["id"] = str(exercise["_id"])
-            exercises_list.append(exercise)
-        print("AHHHHHHHHHHHHHH Exercise List", exercises_list)
-        return exercises_list
+        try:
+            exercises_list = []
+            for exercise in self.collection.find():
+                exercise["id"] = str(exercise["_id"])
+                exercises_list.append(exercise)
+            return exercises_list
+        except Exception as e:
+            return {"message": "Unable to get exercises"}
 
     def create_exercise(self, exercise_in: ExerciseIn):
         exercise_dict = exercise_in.dict()
