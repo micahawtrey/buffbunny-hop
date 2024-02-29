@@ -41,7 +41,7 @@ async def create_account(
 def update_account(
     account_id: str,
     account_in: AccountIn,
-    account_data: dict = Depends(authenticator.get_account_data),
+    account_data: dict = Depends(authenticator.get_current_account_data),
     queries: AccountQueries = Depends()
 ):
     account = queries.update(account_id=account_id, account_data=account_data['id'], account_in=account_in)

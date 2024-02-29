@@ -33,7 +33,7 @@ def create_exercise(
 def update_exercise(
     exercise_id: str,
     exercise_in: ExerciseIn,
-    account_id: dict = Depends(authenticator.get_account_data),
+    account_id: dict = Depends(authenticator.get_current_account_data),
     queries: ExerciseQueries = Depends()
 ):
     exercise = queries.update(exercise_id=exercise_id, account_id=account_id['id'], exercise_in=exercise_in)
