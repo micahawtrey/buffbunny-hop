@@ -61,5 +61,3 @@ class Account(AccountOut):
 class DeleteStatus(BaseModel):
     success: bool
     message: str
-
-#just needed to add something to test this git push

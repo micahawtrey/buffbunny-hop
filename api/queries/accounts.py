@@ -1,5 +1,5 @@
 from typing import List
-from models import AccountIn, Account
+from models import AccountIn, Account, Exercise, ExerciseIn
 from .queries import Queries
 
 class DuplicateAccountError(ValueError):
