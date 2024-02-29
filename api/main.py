@@ -4,11 +4,13 @@ import os
 from authenticator import authenticator
 from routers import accounts
 from routers import exercises
+from routers import workouts
 
 app = FastAPI()
 app.include_router(authenticator.router)
 app.include_router(accounts.router, tags=["Accounts"])
 app.include_router(exercises.router, tags=["Exercises"])
+app.include_router(workouts.router, tags=["Workouts"])
 
 app.add_middleware(
     CORSMiddleware,

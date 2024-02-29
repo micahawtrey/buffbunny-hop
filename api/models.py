@@ -8,8 +8,9 @@ class Error(BaseModel):
 class Deleted(BaseModel):
     deleted: bool
 
-class Exercise(BaseModel):
+class WorkoutExercise(BaseModel):
     name: str
+    muscle_group: str
     set: str
     rep: str
 
@@ -22,7 +23,7 @@ class ExerciseOut(ExerciseIn):
 
 class WorkoutIn(BaseModel):
     name: str
-    exercises: List[Exercise]
+    exercises: List[WorkoutExercise]
 
 class WorkoutOut(WorkoutIn):
     id: str
