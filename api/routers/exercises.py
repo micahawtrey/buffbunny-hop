@@ -7,7 +7,6 @@ from fastapi import (
     Request,
 )
 from authenticator import authenticator
-from typing import List
 from typing import List, Union
 from queries.exercises import ExerciseQueries
 from models import ExerciseOut, ExerciseIn, Error, Deleted
