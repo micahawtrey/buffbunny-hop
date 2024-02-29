@@ -2,6 +2,11 @@ from pydantic import BaseModel
 from typing import List
 from jwtdown_fastapi.authentication import Token
 
+class Error(BaseModel):
+    message: str
+
+class Deleted(BaseModel):
+    deleted: bool
 
 class Exercise(BaseModel):
     name: str
@@ -44,6 +49,9 @@ class AccountOut(BaseModel):
     email: str
     workouts: List[WorkoutOut]
 
+class Account(AccountOut):
+    hashed_password: str
+
 #routers
 class AccountForm(BaseModel):
     username: str
@@ -54,9 +62,6 @@ class AccountToken(Token):
 
 class HttpError(BaseModel):
     detail: str
-
-class Account(AccountOut):
-    hashed_password: str
 
 class DeleteStatus(BaseModel):
     success: bool

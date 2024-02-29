@@ -1,3 +1,5 @@
+from bson.objectid import ObjectId
+from bson.errors import InvalidId
 from typing import List
 from models import AccountIn, Account, Exercise, ExerciseIn
 from .queries import Queries
@@ -27,6 +29,14 @@ class AccountQueries(Queries):
         account["id"] = str(account["_id"])
         return Account(**account)
 
-    def delete_one(self, account_id: str) -> bool:
-        result = self.collection.delete_one({"_id": account_id})
-        return result.deleted_count > 0
+    def update(self, account_id: str, account_in: AccountIn):
+        query = {
+            'id': ObjectId(account_id),
+            'account_id': account_id
+        }
+        changes = account_in.dict()
+        res = self.collection.update_one(query, {'$set': changes})
+        if res.matched_count >= 1:
+            changes['id'] = account_id
+            changes['account_id'] = account_id
+            return changes
