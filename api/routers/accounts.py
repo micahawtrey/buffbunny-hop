@@ -37,17 +37,17 @@ async def create_account(
     return AccountToken(account=account, **token.dict())
 
 
-# @router.put("/api/accounts/{account_id}", response_model=AccountOut)
-# def update_account(
-#     account_id: str,
-#     account_in: AccountIn,
-#     account_data: dict = Depends(authenticator.get_account_data),
-#     queries: AccountQueries = Depends()
-# ):
-#     account = queries.update(account_id=account_id, account_data=account_data['id'], account_in=account_in)
-#     if account is None:
-#         raise HTTPException(status_code=404, detail="Account not found")
-#     return account
+@router.put("/api/accounts/{account_id}", response_model=AccountOut)
+def update_account(
+    account_id: str,
+    account_in: AccountIn,
+    account_data: dict = Depends(authenticator.get_account_data),
+    queries: AccountQueries = Depends()
+):
+    account = queries.update(account_id=account_id, account_data=account_data['id'], account_in=account_in)
+    if account is None:
+        raise HTTPException(status_code=404, detail="Account not found")
+    return account
 
 
 @router.delete('/api/projects/{account_id}', response_model=DeleteStatus)
