@@ -5,6 +5,9 @@ from jwtdown_fastapi.authentication import Token
 class Error(BaseModel):
     message: str
 
+class Deleted(BaseModel):
+    deleted: bool
+
 class Exercise(BaseModel):
     name: str
     set: str

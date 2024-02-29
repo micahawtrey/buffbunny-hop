@@ -22,3 +22,10 @@ class ExerciseQueries(Queries):
         self.collection.insert_one(exercise_dict)
         exercise_dict['id'] = str(exercise_dict['_id'])
         return ExerciseOut(**exercise_dict)
+
+    def delete_exercise(self, exercise_name: str):
+        try:
+            self.collection.delete_one({"name": exercise_name})
+            return {"deleted": True}
+        except Exception as e:
+            return {"deleted": False}

@@ -8,7 +8,7 @@ from fastapi import (
 )
 from typing import List, Union
 from queries.exercises import ExerciseQueries
-from models import ExerciseOut, ExerciseIn, Error
+from models import ExerciseOut, ExerciseIn, Error, Deleted
 
 router = APIRouter()
 
@@ -26,3 +26,10 @@ def create_exercise(
 ):
     new_exercise = repo.create_exercise(exercise_in)
     return new_exercise
+
+@router.delete("/api/exercises/{exercise_name}", response_model=Deleted)
+def delete_exercise(
+    exercise_name,
+    repo: ExerciseQueries = Depends()
+):
+    return repo.delete_exercise(exercise_name=exercise_name)
