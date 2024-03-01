@@ -38,6 +38,8 @@ def create_routine(
     repo: RoutineQueries = Depends()
 ):
     routine = repo.create(routine_in, account_id["id"])
+    if routine is None:
+        raise HTTPException(status_code=404, detail="Can't be created")
     return routine
 
 @router.put("/api/routines/{routine_id}", response_model=RoutineOut)
@@ -45,7 +47,7 @@ def update_routine(
     routine_id: str,
     routine_in: RoutineIn,
     account_id: dict = Depends(authenticator.get_current_account_data),
-    queries: RoutineQueries = Depends()
+    repo: RoutineQueries = Depends()
 ):
     routine = repo.update(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
     if routine is None:

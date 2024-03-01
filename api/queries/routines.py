@@ -29,6 +29,7 @@ class RoutineQueries(Queries):
             return routines_list
         except Exception as e:
             return {"message": "Unable to get exercises " + str(e)}
+
     def get_one_routine(self, routine_id: str):
         try:
             routine = self.collection.find_one({"_id": ObjectId(routine_id)})
