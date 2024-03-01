@@ -39,16 +39,24 @@ class RoutineQueries(Queries):
         return RoutineOut(**routine)
 
     def update_routine(self, routine_id: str, account_id: str, routine_in: RoutineIn):
-        query = {
-            '_id': ObjectId(routine_id),
-            'account_id': account_id
-        }
-        changes = routine_in.dict()
-        res = self.collection.update_one(query, {'$set': changes})
-        if res.matched_count >= 1:
-            changes['id'] = routine_id
-            changes['account_id'] = account_id
-            return changes
+        try:
+            query = {
+                '_id': ObjectId(routine_id),
+                'account_id': account_id
+            }
+            if self.collection.find_one({"_id": ObjectId(routine_id)}) is None:
+                return {"message": "Invalid routine ID"}
+            changes = routine_in.dict()
+            res = self.collection.update_one(query, {'$set': changes})
+            if res.matched_count >= 1:
+                changes['id'] = routine_id
+                changes['account_id'] = account_id
+                return changes
+            else:
+                return {"message": "No matching routine found to update"}
+
+        except Exception as e:
+            return {"message": "Unable to update routine, " + str(e)}
 
     def delete_routine(self, routine_id: str, account_id: str):
         try:
