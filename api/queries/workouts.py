@@ -48,3 +48,15 @@ class WorkoutQueries(Queries):
             return updated_workout
         except Exception as e:
             return {"message": "Unable to update workout, "+ str(e)}
+
+    def delete_workout(self, workout_id: str, account_id: str):
+        try:
+            result = self.collection.delete_one({"_id": ObjectId(workout_id), "account_id": account_id})
+            if result.deleted_count > 0:
+                return {"deleted": True}
+            else:
+                return {"deleted": False, "message": "No such workout exists for this account"}
+        except InvalidId:
+            return {"deleted": False, "message": "Invalid exercise ID"}
+        except Exception as e:
+            return {"deleted": False, "message": f"Error deleting workout: {str(e)}"}
