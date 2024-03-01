@@ -1,7 +1,7 @@
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from typing import List
-from models import AccountIn, Account, WorkoutExercise, ExerciseIn
+from models import AccountIn, Account
 from .queries import Queries
 
 class DuplicateAccountError(ValueError):
@@ -19,7 +19,7 @@ class AccountQueries(Queries):
         return Account(**account)
 
     def create(self, info: AccountIn, hashed_password: str):
-        if self.get({info.username}) is not None:
+        if self.get(info.username) is not None:
             raise DuplicateAccountError(f"Account with username {info.username} already exists.")
 
         account = info.dict()

@@ -56,7 +56,7 @@ class Account(AccountOut):
 #routers
 class AccountForm(BaseModel):
     username: str
-    hashed_password: str
+    password: str
 
 class AccountToken(Token):
     account: AccountOut

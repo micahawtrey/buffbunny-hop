@@ -11,16 +11,30 @@ class WorkoutQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "workouts"
 
-    def get(self, id: str):
-        workout = self.collection.find_one({"_id": ObjectId(id)})
-        if workout is None:
-            return None
-        workout["id"] = str(workout["_id"])
-        return WorkoutOut(**workout)
+    def get(self, workout_id: str):
+        try:
+            workout = self.collection.find_one({"_id": ObjectId(workout_id)})
+            if workout is None:
+                return None
+            workout["id"] = str(workout["_id"])
+            return WorkoutOut(**workout)
+        except Exception as e:
+            return {"message": "Unable to get workout, "+ str(e)}
 
     def create(self, info: WorkoutIn):
-
         workout = info.dict()
         self.collection.insert_one(workout)
         workout["id"] = str(workout["_id"])
         return WorkoutOut(**workout)
+
+    def update(self, workout_id: str, info: WorkoutIn):
+        try:
+            if self.collection.find_one({"_id": ObjectId(workout_id)}) is None:
+                return {"message": "Invalid workout ID"}
+            workout = info.dict()
+            self.collection.update_one({"_id": ObjectId(workout_id)}, {"$set": workout})
+            updated_workout = self.collection.find_one({"_id": ObjectId(workout_id)})
+            updated_workout["id"] = str(updated_workout["_id"])
+            return updated_workout
+        except Exception as e:
+            return {"message": "Unable to update workout, "+ str(e)}
