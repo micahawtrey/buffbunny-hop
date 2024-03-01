@@ -36,3 +36,15 @@ class RoutineQueries(Queries):
             changes['id'] = routine_id
             changes['account_id'] = account_id
             return changes
+
+    def delete_routine(self, routine_id: str, account_id: str):
+        try:
+            result = self.collection.delete_one({"id": ObjectId(routine_id), "account_id": account_id})
+            if result.deleted_count > 0:
+                return {"deleted": True}
+            else:
+                return {"deleted": False, "message": "No such routine exists for this account"}
+        except InvalidId:
+            return {"deleted": False, "message": "Invalid routine ID"}
+        except Exception as e:
+            return {"deleted": False, "message": f"Error deleting routine: {str(e)}"}
