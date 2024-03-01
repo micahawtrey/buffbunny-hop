@@ -53,7 +53,7 @@ class ExerciseQueries(Queries):
 
     def delete_exercise(self, exercise_id: str, account_id: str):
         try:
-            result = self.collection.delete_one({"id": ObjectId(exercise_id), "account_id": account_id})
+            result = self.collection.delete_one({"_id": ObjectId(exercise_id), "account_id": account_id})
             if result.deleted_count > 0:
                 return {"deleted": True}
             else:

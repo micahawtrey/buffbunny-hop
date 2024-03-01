@@ -8,7 +8,7 @@ from fastapi import (
 )
 from typing import List, Union
 from queries.workouts import WorkoutQueries
-from models import ExerciseOut, WorkoutIn, WorkoutOut, Error
+from models import ExerciseOut, WorkoutIn, WorkoutOut, Error, Deleted
 from authenticator import authenticator
 
 router = APIRouter()
@@ -54,3 +54,12 @@ def update_workout(
 ):
     updated_workout = repo.update(workout_id, info)
     return updated_workout
+
+@router.delete("/api/workout/{workout_id}", response_model=Deleted)
+def delete_workout(
+    workout_id: str,
+    account_id: dict = Depends(authenticator.get_current_account_data),
+    repo: WorkoutQueries = Depends()
+):
+    deletion = repo.delete_workout(workout_id=workout_id, account_id=account_id["id"])
+    return deletion
