@@ -2,7 +2,7 @@ from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from .queries import Queries
 from models import RoutineOut, RoutineIn
-from typing import List
+
 
 class RoutineQueries(Queries):
     DB_NAME = "buffbunny_hop"
@@ -17,7 +17,7 @@ class RoutineQueries(Queries):
                 routines_list.append(routine)
             return routines_list
         except Exception as e:
-            return {"message": "Unable to get exercises " + str(e)}
+            return {"message": "Unable to get routines " + str(e)}
 
     def get_one_routine(self, routine_id: str):
         try:
@@ -29,9 +29,16 @@ class RoutineQueries(Queries):
         except InvalidId:
             return {"message": "Invalid routine ID"}
         except Exception as e:
-            return {"message": "Unable to get routine, "+ str(e)}
+            return {"message": "Unable to get routine, " + str(e)}
 
-    def update(self, routine_id: str, account_id: str, routine_in: RoutineIn):
+    def create_routine(self, routine_in: RoutineIn, account_id: str):
+        routine = routine_in.dict()
+        routine["account_id"] = account_id
+        self.collection.insert_one(routine)
+        routine["id"] = str(routine["_id"])
+        return RoutineOut(**routine)
+
+    def update_routine(self, routine_id: str, account_id: str, routine_in: RoutineIn):
         query = {
             '_id': ObjectId(routine_id),
             'account_id': account_id
@@ -42,13 +49,6 @@ class RoutineQueries(Queries):
             changes['id'] = routine_id
             changes['account_id'] = account_id
             return changes
-
-    def create(self, routine_in: RoutineIn, account_id: str):
-        routine = routine_in.dict()
-        routine["account_id"] = account_id
-        self.collection.insert_one(routine)
-        routine["id"] = str(routine["_id"])
-        return routine
 
     def delete_routine(self, routine_id: str, account_id: str):
         try:

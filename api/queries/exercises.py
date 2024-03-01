@@ -2,7 +2,6 @@ from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from .queries import Queries
 from models import ExerciseOut, ExerciseIn
-from typing import List
 
 
 class ExerciseQueries(Queries):
@@ -17,11 +16,11 @@ class ExerciseQueries(Queries):
                 exercises_list.append(exercise)
             return exercises_list
         except Exception as e:
-            return {"message": "Unable to get exercises"}
+            return {"message": "Unable to get exercises" + str(e)}
 
-    def get_one_exercise(self, exercise_id: str, account_id: str):
+    def get_one_exercise(self, exercise_id: str):
         try:
-            exercise = self.collection.find_one({"_id": ObjectId(exercise_id), "account_id": account_id})
+            exercise = self.collection.find_one({"_id": ObjectId(exercise_id)})
             if exercise:
                 exercise["id"] = str(exercise["_id"])
                 return ExerciseOut(**exercise)
@@ -29,17 +28,17 @@ class ExerciseQueries(Queries):
         except InvalidId:
             return {"message": "Invalid exercise ID"}
         except Exception as e:
-            return{"message": "Unable to get exercise"}
+            return{"message": "Unable to get exercise" + str(e)}
 
 
     def create_exercise(self, exercise_in: ExerciseIn, account_id: str):
-        exercise_dict = exercise_in.dict()
-        exercise_dict["account_id"] = account_id
-        self.collection.insert_one(exercise_dict)
-        exercise_dict['id'] = str(exercise_dict['_id'])
-        return ExerciseOut(**exercise_dict)
+        exercise = exercise_in.dict()
+        exercise["account_id"] = account_id
+        self.collection.insert_one(exercise)
+        exercise['id'] = str(exercise['_id'])
+        return ExerciseOut(**exercise)
 
-    def update(self, exercise_id: str, account_id: str, exercise_in: ExerciseIn):
+    def update_exercise(self, exercise_id: str, account_id: str, exercise_in: ExerciseIn):
         query = {
             '_id': ObjectId(exercise_id),
             'account_id': account_id

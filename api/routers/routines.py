@@ -19,7 +19,7 @@ def get_routine(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: RoutineQueries = Depends()
 ):
-    routine = repo.get(routine_id)
+    routine = repo.get_one_routine(routine_id)
     return routine
 
 @router.get("/api/routines", response_model=Union[List[RoutineOut], Error])
@@ -37,7 +37,7 @@ def create_routine(
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: RoutineQueries = Depends()
 ):
-    routine = repo.create(routine_in, account_id["id"])
+    routine = repo.create_routine(routine_in, account_id["id"])
     if routine is None:
         raise HTTPException(status_code=404, detail="Can't be created")
     return routine
@@ -49,7 +49,7 @@ def update_routine(
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: RoutineQueries = Depends()
 ):
-    routine = repo.update(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
+    routine = repo.update_routine(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
     if routine is None:
         raise HTTPException(status_code=404, detail="Routine not found")
     return routine

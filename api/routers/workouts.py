@@ -27,7 +27,7 @@ def get_workout(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: WorkoutQueries = Depends()
 ):
-    workout = repo.get(workout_id)
+    workout = repo.get_one_workout(workout_id)
     return workout
 
 @router.post("/api/workouts", response_model=WorkoutOut)
@@ -37,7 +37,7 @@ def create_workout(
     repo: WorkoutQueries = Depends()
 ):
     try:
-        workout = repo.create(info)
+        workout = repo.create_workout(info, account_data["id"])
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -52,7 +52,7 @@ def update_workout(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: WorkoutQueries = Depends()
 ):
-    updated_workout = repo.update(workout_id, info)
+    updated_workout = repo.update_workout(workout_id, info, account_data["id"])
     return updated_workout
 
 @router.delete("/api/workout/{workout_id}", response_model=Deleted)
