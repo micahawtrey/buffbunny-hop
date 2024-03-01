@@ -5,11 +5,25 @@ from models import RoutineOut, RoutineIn
 from typing import List
 
 from queries import Queries
+from bson.objectid import ObjectId
+from bson.errors import InvalidId
+from models import RoutineIn, RoutineOut, WorkoutOut
 
 class RoutineQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "routines"
 
+    def get(self, routine_id: str):
+        try:
+            routine = self.collection.find_one({"_id": ObjectId(routine_id)})
+            if routine is None:
+                return {"message": "Invalid routine ID"}
+            routine["id"] = str(routine["_id"])
+            return RoutineOut(routine)
+        except InvalidId:
+            return {"message": "Invalid routine ID"}
+        except Exception as e:
+            return {"message": "Unable to get workout, "+ str(e)}
 
     def update(self, routine_id: str, account_id: str, routine_in: RoutineIn):
         query = {
@@ -22,5 +36,3 @@ class RoutineQueries(Queries):
             changes['id'] = routine_id
             changes['account_id'] = account_id
             return changes
-
-
