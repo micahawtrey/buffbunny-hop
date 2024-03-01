@@ -2,6 +2,7 @@ Jory Bennett
 
 03-01-2024
 
+Worked on getting Routines set up. Endpoint and functionality. Had some personal issues using the merge on gitlab. Everything is pushed and merged it just doesn't properly reflect the when or how.
 
 02-29-2024
 

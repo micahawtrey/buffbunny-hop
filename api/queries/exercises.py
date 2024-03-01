@@ -9,7 +9,7 @@ class ExerciseQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "exercises"
 
-    def get_all_exercises(self, account_id):
+    def get_all_exercises(self):
         try:
             exercises_list = []
             for exercise in self.collection.find():

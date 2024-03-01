@@ -8,19 +8,8 @@ class RoutineQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "routines"
 
-    def get(self, routine_id: str):
-        try:
-            routine = self.collection.find_one({"_id": ObjectId(routine_id)})
-            if routine is None:
-                return {"message": "Invalid routine ID"}
-            routine["id"] = str(routine["_id"])
-            return RoutineOut(routine)
-        except InvalidId:
-            return {"message": "Invalid routine ID"}
-        except Exception as e:
-            return {"message": "Unable to get workout, "+ str(e)}
 
-    def get_all_routines(self, routine_id: str):
+    def get_all_routines(self):
         try:
             routines_list = []
             for routine in self.collection.find():
