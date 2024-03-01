@@ -13,6 +13,13 @@ from authenticator import authenticator
 
 router = APIRouter()
 
+@router.get("/api/workouts", response_model=Union[List[WorkoutOut], Error])
+def get_all_workouts(
+    account_id: dict = Depends(authenticator.get_current_account_data),
+    repo: WorkoutQueries = Depends()
+):
+    workout_list = repo.get_all_workouts()
+    return workout_list
 
 @router.get("/api/workouts/{workout_id}", response_model=Union[WorkoutOut, Error])
 def get_workout(

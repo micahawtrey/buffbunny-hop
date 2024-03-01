@@ -11,6 +11,16 @@ class WorkoutQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "workouts"
 
+    def get_all_workouts(self):
+        try:
+            workout_list = []
+            for workout in self.collection.find():
+                workout["id"] = str(workout["_id"])
+                workout_list.append(workout)
+            return workout_list
+        except Exception as e:
+            return {"message": "Unable to get workouts"}
+
     def get(self, workout_id: str):
         try:
             workout = self.collection.find_one({"_id": ObjectId(workout_id)})
