@@ -27,9 +27,9 @@ def update_routine(
     routine_id: str,
     routine_in: RoutineIn,
     account_id: dict = Depends(authenticator.get_current_account_data),
-    queries: RoutineQueries = Depends()
+    repo: RoutineQueries = Depends()
 ):
-    routine = queries.update(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
+    routine = repo.update(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
     if routine is None:
         raise HTTPException(status_code=404, detail="Routine not found")
     return routine
