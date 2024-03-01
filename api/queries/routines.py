@@ -4,6 +4,7 @@ from .queries import Queries
 from models import RoutineOut, RoutineIn
 from typing import List
 
+from queries import Queries
 
 class RoutineQueries(Queries):
     DB_NAME = "buffbunny_hop"
@@ -22,4 +23,4 @@ class RoutineQueries(Queries):
             changes['account_id'] = account_id
             return changes
 
-   
+
