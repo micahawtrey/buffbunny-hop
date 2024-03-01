@@ -4,11 +4,6 @@ from .queries import Queries
 from models import RoutineOut, RoutineIn
 from typing import List
 
-from queries import Queries
-from bson.objectid import ObjectId
-from bson.errors import InvalidId
-from models import RoutineIn, RoutineOut, WorkoutOut
-
 class RoutineQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "routines"
