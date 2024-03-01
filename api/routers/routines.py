@@ -13,6 +13,14 @@ from models import RoutineOut, RoutineIn, Error, Deleted
 
 router = APIRouter()
 
+@router.get("/api/routines/{routine_id}", respone_model=Union[RoutineOut, Error])
+def get_routine(
+    routine_id,
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    repo: RoutineQueries = Depends()
+):
+    routine = repo.get(routine_id)
+    return routine
 
 @router.put("/api/routines/{routine_id}", response_model=RoutineOut)
 def update_routine(
@@ -25,4 +33,3 @@ def update_routine(
     if routine is None:
         raise HTTPException(status_code=404, detail="Routine not found")
     return routine
-
