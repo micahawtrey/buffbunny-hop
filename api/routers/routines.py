@@ -30,14 +30,24 @@ def get_all_routines(
     routines_list = repo.get_all_routines()
     return routines_list
 
-@router.put("/api/routines/{routine_id}", response_model=Union[RoutineOut, Error])
+
+@router.post("/api/routines", response_model=Union[RoutineOut, Error])
+def create_routine(
+    routine_in: RoutineIn,
+    account_id: dict = Depends(authenticator.get_current_account_data),
+    repo: RoutineQueries = Depends()
+):
+    routine = repo.create(routine_in, account_id["id"])
+    return routine
+
+@router.put("/api/routines/{routine_id}", response_model=RoutineOut)
 def update_routine(
     routine_id: str,
     routine_in: RoutineIn,
     account_id: dict = Depends(authenticator.get_current_account_data),
     queries: RoutineQueries = Depends()
 ):
-    routine = queries.update(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
+    routine = repo.update(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
     if routine is None:
         raise HTTPException(status_code=404, detail="Routine not found")
     return routine

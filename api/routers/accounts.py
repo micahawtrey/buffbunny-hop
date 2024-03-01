@@ -42,9 +42,9 @@ def update_account(
     account_id: str,
     account_in: AccountIn,
     account_data: dict = Depends(authenticator.get_current_account_data),
-    queries: AccountQueries = Depends()
+    repo: AccountQueries = Depends()
 ):
-    account = queries.update(account_id=account_id, account_data=account_data['id'], account_in=account_in)
+    account = repo.update(account_id=account_id, account_data=account_data['id'], account_in=account_in)
     if account is None:
         raise HTTPException(status_code=404, detail="Account not found")
     return account
@@ -53,9 +53,10 @@ def update_account(
 @router.delete('/api/accounts/{account_id}', response_model=DeleteStatus)
 def delete_account(
     account_id: str,
+    account_data: dict = Depends(authenticator.get_current_account_data),
     account_queries: AccountQueries = Depends()
 ) -> DeleteStatus:
-    deletion_success = account_queries.delete_one(account_id)
+    deletion_success = account_queries.delete_one(account_id=account_id, account_data=account_data['id'])
     if deletion_success:
         return DeleteStatus(success=True, message="Account deleted successfully.")
     else:

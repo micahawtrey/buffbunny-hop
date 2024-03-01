@@ -9,7 +9,7 @@ class ExerciseQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "exercises"
 
-    def get_all_exercises(self):
+    def get_all_exercises(self, account_id):
         try:
             exercises_list = []
             for exercise in self.collection.find():
@@ -21,7 +21,7 @@ class ExerciseQueries(Queries):
 
     def get_one_exercise(self, exercise_id: str, account_id: str):
         try:
-            exercise = self.collection .find_one({"_id": ObjectId(exercise_id), "account_id": account_id})
+            exercise = self.collection.find_one({"_id": ObjectId(exercise_id), "account_id": account_id})
             if exercise:
                 exercise["id"] = str(exercise["_id"])
                 return ExerciseOut(**exercise)
@@ -51,7 +51,7 @@ class ExerciseQueries(Queries):
             changes['account_id'] = account_id
             return changes
 
-    def delete_exercise(self, exercise_name: str, account_id: str):
+    def delete_exercise(self, exercise_id: str, account_id: str):
         try:
             result = self.collection.delete_one({"id": ObjectId(exercise_id), "account_id": account_id})
             if result.deleted_count > 0:

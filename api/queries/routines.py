@@ -29,6 +29,17 @@ class RoutineQueries(Queries):
             return routines_list
         except Exception as e:
             return {"message": "Unable to get exercises " + str(e)}
+    def get_one_routine(self, routine_id: str):
+        try:
+            routine = self.collection.find_one({"_id": ObjectId(routine_id)})
+            if routine:
+                routine["id"] = str(routine["_id"])
+                return RoutineOut(**routine)
+            return None
+        except InvalidId:
+            return {"message": "Invalid routine ID"}
+        except Exception as e:
+            return {"message": "Unable to get routine, "+ str(e)}
 
     def update(self, routine_id: str, account_id: str, routine_in: RoutineIn):
         query = {
@@ -42,9 +53,16 @@ class RoutineQueries(Queries):
             changes['account_id'] = account_id
             return changes
 
+    def create(self, routine_in: RoutineIn, account_id: str):
+        routine = routine_in.dict()
+        routine["account_id"] = account_id
+        self.collection.insert_one(routine)
+        routine["id"] = str(routine["_id"])
+        return routine
+
     def delete_routine(self, routine_id: str, account_id: str):
         try:
-            result = self.collection.delete_one({"id": ObjectId(routine_id), "account_id": account_id})
+            result = self.collection.delete_one({"_id": ObjectId(routine_id), "account_id": account_id})
             if result.deleted_count > 0:
                 return {"deleted": True}
             else:
