@@ -21,7 +21,7 @@ class ExerciseQueries(Queries):
 
     def get_one_exercise(self, exercise_id: str, account_id: str):
         try:
-            exercise = self.collection .find_one({"_id": ObjectId(exercise_id), "account_id": account_id})
+            exercise = self.collection.find_one({"_id": ObjectId(exercise_id), "account_id": account_id})
             if exercise:
                 exercise["id"] = str(exercise["_id"])
                 return ExerciseOut(**exercise)
