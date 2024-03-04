@@ -13,20 +13,6 @@ from models import RoutineOut, RoutineIn, Error, Deleted
 
 router = APIRouter()
 
-@router.get("/api/routines/{routine_id}", response_model=Union[RoutineOut, Error])
-def get_routine(
-    routine_id,
-    account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: RoutineQueries = Depends()
-):
-    routine = repo.get_one_routine(routine_id)
-    if routine is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Routine not found"
-        )
-    return routine
-
 @router.get("/api/routines", response_model=Union[List[RoutineOut], Error])
 def get_all_routines(
     account_id: dict = Depends(authenticator.get_current_account_data),
@@ -41,6 +27,19 @@ def get_all_routines(
             )
     return routines_list
 
+@router.get("/api/routines/{routine_id}", response_model=Union[RoutineOut, Error])
+def get_routine(
+    routine_id,
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    repo: RoutineQueries = Depends()
+):
+    routine = repo.get_one_routine(routine_id)
+    if routine is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Routine not found"
+        )
+    return routine
 
 @router.post("/api/routines", response_model=Union[RoutineOut, Error])
 def create_routine(
@@ -56,7 +55,7 @@ def create_routine(
             )
     return routine
 
-@router.put("/api/routines/{routine_id}", response_model=RoutineOut)
+@router.put("/api/routines/{routine_id}", response_model=Union[RoutineOut, Error])
 def update_routine(
     routine_id: str,
     routine_in: RoutineIn,

@@ -49,7 +49,7 @@ class WorkoutQueries(Queries):
             self.collection.update_one(query, {"$set": workout})
             updated_workout = self.collection.find_one({"_id": ObjectId(workout_id)})
             updated_workout["id"] = str(updated_workout["_id"])
-            return WorkoutOut(updated_workout)
+            return WorkoutOut(**updated_workout)
         except Exception as e:
             return {"message": "Unable to update workout, " + str(e)}
 

@@ -27,14 +27,19 @@ def get_all_exercises(
             )
     return exercises_list
 
-@router.get("/api/exercises/{exercise_id}", response_model=ExerciseOut)
+@router.get("/api/exercises/{exercise_id}", response_model=Union[ExerciseOut, Error])
 def get_one_exercise(
     exercise_id: str,
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
     try:
-        exercise = repo.get_one_exercise(exercise_id, account_id=account_id["id"])
+        exercise = repo.get_one_exercise(exercise_id)
+        if exercise is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Exercise not found"
+            )
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -50,14 +55,14 @@ def create_exercise(
 ):
     try:
         new_exercise = repo.create_exercise(exercise_in, account_id=account_id["id"])
-    except ValueError as e:
+    except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(e)
             )
     return new_exercise
 
-@router.put("/api/exercises/{exercise_id}", response_model=ExerciseOut)
+@router.put("/api/exercises/{exercise_id}", response_model=Union[ExerciseOut, Error])
 def update_exercise(
     exercise_id: str,
     exercise_in: ExerciseIn,
@@ -65,7 +70,7 @@ def update_exercise(
     repo: ExerciseQueries = Depends()
 ):
     try:
-        exercise = repo.update(exercise_id=exercise_id, account_id=account_id['id'], exercise_in=exercise_in)
+        exercise = repo.update_exercise(exercise_id=exercise_id, account_id=account_id['id'], exercise_in=exercise_in)
     except ValueError as e:
         raise HTTPException(
             status_code=404,
@@ -82,7 +87,8 @@ def delete_exercise(
     try:
         deletion = repo.delete_exercise(exercise_id=exercise_id, account_id=account_id["id"])
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail="Exercise not found" + str(e)
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Exercise not found" + str(e)
         )
     return deletion

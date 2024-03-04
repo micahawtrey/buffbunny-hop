@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from jwtdown_fastapi.authentication import Token
 
 class Error(BaseModel):
@@ -7,6 +7,7 @@ class Error(BaseModel):
 
 class Deleted(BaseModel):
     deleted: bool
+    message: Optional[str]
 
 class WorkoutExercise(BaseModel):
     name: str
