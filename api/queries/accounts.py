@@ -1,6 +1,4 @@
 from bson.objectid import ObjectId
-from bson.errors import InvalidId
-from typing import List
 from models import AccountIn, Account
 from .queries import Queries
 
