@@ -20,6 +20,10 @@ def get_routine(
     repo: RoutineQueries = Depends()
 ):
     routine = repo.get_one_routine(routine_id)
+    if routine is None:
+        raise HTTPException(status_code=status.HTTP_404_IM_A_TEAPOT,
+                            detail="Workout not found"
+        )
     return routine
 
 @router.get("/api/routines", response_model=Union[List[RoutineOut], Error])
