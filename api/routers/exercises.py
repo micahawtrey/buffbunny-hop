@@ -18,7 +18,13 @@ def get_all_exercises(
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
-    exercises_list = repo.get_all_exercises()
+    try:
+        exercises_list = repo.get_all_exercises()
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+            )
     return exercises_list
 
 @router.get("/api/exercises/{exercise_id}", response_model=ExerciseOut)
@@ -27,11 +33,13 @@ def get_one_exercise(
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
-    exercise = repo.get_one_exercise(exercise_id, account_id=account_id["id"])
-    if exercise is None:
-        raise HTTPException(status_code=status.HTTP_418_IM_A_TEAPOT,
-                            detail="Exercise not found"
-        )
+    try:
+        exercise = repo.get_one_exercise(exercise_id, account_id=account_id["id"])
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+            )
     return exercise
 
 @router.post("/api/exercises", response_model=ExerciseOut)
@@ -40,7 +48,13 @@ def create_exercise(
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
-    new_exercise = repo.create_exercise(exercise_in, account_id=account_id["id"])
+    try:
+        new_exercise = repo.create_exercise(exercise_in, account_id=account_id["id"])
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+            )
     return new_exercise
 
 @router.put("/api/exercises/{exercise_id}", response_model=ExerciseOut)
@@ -50,9 +64,13 @@ def update_exercise(
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
-    exercise = repo.update(exercise_id=exercise_id, account_id=account_id['id'], exercise_in=exercise_in)
-    if exercise is None:
-        raise HTTPException(status_code=404, detail="Exercise not found")
+    try:
+        exercise = repo.update(exercise_id=exercise_id, account_id=account_id['id'], exercise_in=exercise_in)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=404,
+            detail="Exercise not found" + str(e)
+            )
     return exercise
 
 @router.delete("/api/exercises/{exercise_id}", response_model=Deleted)
@@ -61,5 +79,10 @@ def delete_exercise(
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
-    deletion = repo.delete_exercise(exercise_id=exercise_id, account_id=account_id["id"])
+    try:
+        deletion = repo.delete_exercise(exercise_id=exercise_id, account_id=account_id["id"])
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail="Exercise not found" + str(e)
+        )
     return deletion

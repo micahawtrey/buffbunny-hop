@@ -53,9 +53,12 @@ def update_routine(
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: RoutineQueries = Depends()
 ):
-    routine = repo.update_routine(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
-    if routine is None:
-        raise HTTPException(status_code=404, detail="Routine not found")
+    try:
+        routine = repo.update_routine(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=404, detail="Routine not found"
+            )
     return routine
 
 @router.delete("/api/routines/{routine_id}", response_model=Deleted)

@@ -39,16 +39,22 @@ class ExerciseQueries(Queries):
         return ExerciseOut(**exercise)
 
     def update_exercise(self, exercise_id: str, account_id: str, exercise_in: ExerciseIn):
-        query = {
-            '_id': ObjectId(exercise_id),
-            'account_id': account_id
-        }
-        changes = exercise_in.dict()
-        res = self.collection.update_one(query, {'$set': changes})
-        if res.matched_count >= 1:
-            changes['id'] = exercise_id
-            changes['account_id'] = account_id
-            return changes
+        try:
+            query = {
+                '_id': ObjectId(exercise_id),
+                'account_id': account_id
+            }
+            if self.collection.find_one({"_id": ObjectId(exercise_id)}) is None:
+                return {"message": "Invalid exercise ID"}
+            changes = exercise_in.dict()
+            res = self.collection.update_one(query, {'$set': changes})
+            if res.matched_count >= 1:
+                updated_exercise = res.find_one({"_id": ObjectId(exercise_id)})
+                updated_exercise["id"] = str(updated_exercise["_id"])
+            else:
+                return {"message": "No exercise was updated"}
+        except Exception as e:
+            return {"message": "Unable to update exercise: " + str(e)}
 
     def delete_exercise(self, exercise_id: str, account_id: str):
         try:
