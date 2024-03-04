@@ -2,6 +2,7 @@ from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from .queries import Queries
 from models import ExerciseOut, ExerciseIn
+from fastapi import status, HTTPException
 
 
 class ExerciseQueries(Queries):
@@ -32,10 +33,16 @@ class ExerciseQueries(Queries):
 
 
     def create_exercise(self, exercise_in: ExerciseIn, account_id: str):
-        exercise = exercise_in.dict()
-        exercise["account_id"] = account_id
-        self.collection.insert_one(exercise)
-        exercise['id'] = str(exercise['_id'])
+        try:
+            exercise = exercise_in.dict()
+            exercise["account_id"] = account_id
+            self.collection.insert_one(exercise)
+            exercise['id'] = str(exercise['_id'])
+        except Exception as e:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=str(e)
+                )
         return ExerciseOut(**exercise)
 
     def update_exercise(self, exercise_id: str, account_id: str, exercise_in: ExerciseIn):
@@ -46,11 +53,14 @@ class ExerciseQueries(Queries):
             }
             if self.collection.find_one({"_id": ObjectId(exercise_id)}) is None:
                 return {"message": "Invalid exercise ID"}
+            if self.collection.find_one(query) is None:
+                return {"message": "This exercise is not associated with the logged in user"}
             changes = exercise_in.dict()
             res = self.collection.update_one(query, {'$set': changes})
             if res.matched_count >= 1:
-                updated_exercise = res.find_one({"_id": ObjectId(exercise_id)})
-                updated_exercise["id"] = str(updated_exercise["_id"])
+                updated_workout = self.collection.find_one({"_id": ObjectId(exercise_id)})
+                updated_workout["id"] = str(updated_workout["_id"])
+                return updated_workout
             else:
                 return {"message": "No exercise was updated"}
         except Exception as e:
