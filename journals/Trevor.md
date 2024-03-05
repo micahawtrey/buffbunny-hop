@@ -1,6 +1,10 @@
 Trevor Cannatella
 
+03-05-2024
+Today we started to work on our front end. The team coded together and re-wacthed the recording on redux.
+
 03-04-2024
+Today, We worked on organizing our backend code.
 
 03-01-2024
 Today, I worked with Andrew on adding try and except block for the workout and exercise functions.
