@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { reset, setLogin } from 'app/loginSlice';
 
 function LoginForm() {
   const [login, setLogin] = useState([]);
 
   const [formData, setFormData] = useState({
-    user_name: '',
+    username: '',
     password: '',
   });
-
-  const fetchData = async () => {
-    const url = 'http://localhost:8000/api/clients/';
-    const response = await fetch(url);
-    if (response.ok) {
-        const data = await response.json();
-        setLogin(data.login);
-    }
-  };
-
-  useEffect(() => {
-      fetchData();
-  }, []);
 
   const handleSubmit = async (event) => {
       event.preventDefault();

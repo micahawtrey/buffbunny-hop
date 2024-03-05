@@ -4,3 +4,6 @@ Today, I successfully implemented GET and POST functions to facilitate the creat
 March 1, 2024
 Added try and except blocks to queries and routines.
 Added delete function to workouts and GET / POST for workout. Good day!
+
+March 5, 2024
+Mob coding, introduced Redux into app Login, Logout, and every GET request.
