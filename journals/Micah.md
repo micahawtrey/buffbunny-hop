@@ -3,6 +3,7 @@
 Today, I worked on:
 
 * Creating all of the routes for our code 
+* Added the rest of the account APIs
 
 We mob programmed today to set up all of the routes
 so we can work on our pages while figuring out redux. 
