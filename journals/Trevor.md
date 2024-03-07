@@ -1,10 +1,10 @@
 Trevor Cannatella
 
 03-07-2024
-Today,finished the routes on the front end
+Today,finished the routes on the front end. We utilized the zoom recordings and ract documenttions to get our routes to work. It was chellenging, had to play with it a lot, but in the end got a solid foundation for our routes. My ah-ha momemt was understanding how the children routes worked in the main.jsx.
 
 03-06-2024
-Today, we we coded as a team to figure out the routes for the front end
+Today, we we coded as a team to figure out the routes for the front end.
 
 03-05-2024
 Today we started to work on our front end. The team coded together and re-wacthed the recording on redux.
