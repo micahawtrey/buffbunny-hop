@@ -8,18 +8,11 @@ export const accountApi = createApi({
     }),
     endpoints: (builder) => ({
         createAccount: builder.mutation({
-            query: info => {
-                let formData = new FormData()
-                formData.append("name", info.name)
-                formData.append("username", info.username)
-                formData.append("password", info.password)
-                formData.append("email", info.email)
-
+            query: body => {
                 return {
                     url: "/api/accounts",
-                    method: "post",
-                    body: formData,
-                    credentials: "include"
+                    method: "POST",
+                    body,
                 }
             }
         }),
@@ -35,7 +28,7 @@ export const accountApi = createApi({
                 }
                 return {
                     url: '/token',
-                    method: 'post',
+                    method: 'POST',
                     body: formData,
                     credentials: 'include',
                 };
@@ -44,10 +37,27 @@ export const accountApi = createApi({
                 return (result && ['Account']) || [];
             },
         }),
+        logout: builder.mutation({
+            query: () => {
+                return {
+                    url: '/token',
+                    method: 'DELETE',
+                }
+            },
+            invalidatesTags: ["Account"]
+        }),
+        getToken: builder.query({
+            query: () => ({
+                url: "/token",
+            }),
+            providesTags: ["Account"]
+        })
     })
 })
 
 export const {
     useCreateAccountMutation,
-    useLoginMutation
+    useLoginMutation,
+    useGetTokenQuery,
+    useLogoutMutation
 } = accountApi
