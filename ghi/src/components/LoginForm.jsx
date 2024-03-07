@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { reset, setLogin } from 'app/loginSlice';
+import { useState } from 'react';
+// import { reset, setLogin } from './app/loginSlice';
 
 function LoginForm() {
-  const [login, setLogin] = useState([]);
+  // const [login, setLogin] = useState([]);
 
   const [formData, setFormData] = useState({
     username: '',

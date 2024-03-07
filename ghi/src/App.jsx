@@ -1,9 +1,15 @@
+import Sidebar from './components/Sidebar'
 import './App.css'
+import Nav from './components/Nav'
+import { Outlet } from "react-router-dom"
+
 
 function App() {
     return (
         <div>
-            ahhh
+            <Nav />
+            <Sidebar />
+            <Outlet />
         </div>
     )
 }

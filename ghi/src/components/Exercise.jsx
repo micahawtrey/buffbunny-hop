@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { EXERCISE_DB_KEY } from '../api_keys';
+import { useEffect, useState } from 'react';
 
-const Exercise = ({ onLogout, username, exerciseId }) => {
+const Exercise = (exerciseId) => {
     const [videoUrl, setVideoUrl] = useState('');
-
+    const EXERCISE_DB_KEY = import.meta.env.VITE_EXERCISE_DB_KEY
     // Fetches video URL based on the exerciseId
     useEffect(() => {
         const fetchVideoUrl = async () => {
@@ -35,7 +34,7 @@ const Exercise = ({ onLogout, username, exerciseId }) => {
         if (exerciseId) {
             fetchVideoUrl();
         }
-    }, [exerciseId]);
+    }, [exerciseId, EXERCISE_DB_KEY]);
 
     return (
         <div className="exercise-container">
@@ -61,7 +60,7 @@ const Exercise = ({ onLogout, username, exerciseId }) => {
                         The Descent:
 
                         Begin by taking a deep breath and holding it to brace your core, keeping your spine neutral and chest up.
-                        Bend at the hips and knees simultaneously as if you're sitting back into a chair. Keep your knees in line with your toes, and don’t let them collapse inward.
+                        Bend at the hips and knees simultaneously as if you’re sitting back into a chair. Keep your knees in line with your toes, and don’t let them collapse inward.
                         Lower yourself until at least the tops of your thighs are parallel to the ground. Some people may go lower, but depth depends on your mobility and comfort.
                         The Ascent:
 
