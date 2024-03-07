@@ -1,3 +1,32 @@
+## March 7, 2024
+
+Today, I worked on:
+
+* Creating all of the routes for our code 
+
+We mob programmed today to set up all of the routes
+so we can work on our pages while figuring out redux. 
+
+Today, I learned how to use the new react-router-dom.
+The RouterProvider was particularly confusing to me.
+It can't be wrapped around anything or it gets mad at you.
+The only way it should interact with any other components
+is by using the routes provided to it via the router.
+
+## March 5, 2024
+
+Today, I worked on:
+
+* Setting up redux 
+
+We mob programmed today to set up redux. We didn't
+finish it because it got confusing with APIs.
+
+Today, I learned that redux makes small projects 
+very confusing and convoluted, and there are many
+tools online that warn about that. It apparently
+really shines at bigger levels.
+
 ## February 29, 2024
 
 Today, I worked on:
