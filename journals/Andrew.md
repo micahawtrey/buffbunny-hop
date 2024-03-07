@@ -5,14 +5,10 @@ March 1, 2024
 Added try and except blocks to queries and routines.
 Added delete function to workouts and GET / POST for workout. Good day!
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 
 March 5, 2024
 Mob coding, introduced Redux into app Login, Logout, and every GET request.
->>>>>>> b5af120d187b496cbc960730c2e888d08d9251ff
-=======
 
-March 5, 2024
-Mob coding, introduced Redux into app Login, Logout, and every GET request.
->>>>>>> a82847b50294827e1d6be95b4bada8cc6a65c0ac
+March 8, 2024
+Mob coded routes
