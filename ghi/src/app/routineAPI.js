@@ -14,6 +14,16 @@ export const routineAPI = createApi({
                 }
             }
         }),
+        getOneRoutine: builder.query({
+            query: (routine_id) => {
+                return {
+                    url: `/api/routines/${routine_id}`,
+                }
+            }
+        })
+
+
+
     })
 })
 
