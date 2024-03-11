@@ -38,6 +38,14 @@ export const workoutAPI = createApi({
                     body
                 }
             }
+        }),
+        deleteWorkout: builder.mutation({
+            query: (workout_id) => {
+                return {
+                    url: `/api/workouts/${workout_id}`,
+                    method: 'DELETE',
+                }
+            }
         })
     })
 })
@@ -48,5 +56,6 @@ export const {
     useGetOneWorkoutQuery,
     useGetAllWorkoutsQuery,
     useUpdateWorkoutMutation,
-    useCreateWorkoutMutation
+    useCreateWorkoutMutation,
+    useDeleteWorkoutMutation,
 } = workoutAPI
