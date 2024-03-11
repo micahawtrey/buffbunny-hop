@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const workoutAPI = createApi({
     reducerPath: "workoutAPI",
-    basequery: fetchBaseQuery({
+    baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_HOST,
         credentials: "include"
     }),
@@ -30,8 +30,16 @@ export const workoutAPI = createApi({
                 }
             }
         }),
+        createWorkout: builder.mutation({
+            query: (body) => {
+                return {
+                    url: "/api/workouts",
+                    method: "POST",
+                    body
+                }
+            }
+        })
     })
-
 })
 
 
@@ -40,4 +48,5 @@ export const {
     useGetOneWorkoutQuery,
     useGetAllWorkoutsQuery,
     useUpdateWorkoutMutation,
+    useCreateWorkoutMutation
 } = workoutAPI
