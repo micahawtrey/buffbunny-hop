@@ -28,7 +28,16 @@ export const routineAPI = createApi({
                     method: 'DELETE',
                 }
             }
-        })
+        }),
+        updateRoutine: builder.mutation({
+            query: (body, routine_id) => {
+                return {
+                    url: `/api/routines/${routine_id}`,
+                    method: "PUT",
+                    body
+                }
+            }
+        }),
 
 
 
@@ -40,4 +49,5 @@ export const {
     useGetAllRoutinesQuery,
     useGetOneRoutineQuery,
     useDeleteRoutineMutation,
+    useUpdateRoutineMutation
 } = routineAPI
