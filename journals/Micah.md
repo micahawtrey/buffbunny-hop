@@ -2,6 +2,20 @@
 
 Today, I worked on:
 
+* Creating all of the frontend redux API routes
+
+We mob programmed today to set up all of the routes. 
+
+Today, I that baseQuery in createApi needs to have a
+capital Q or your exports don't work. I also learned
+that the middleware in the store needs have a list of all 
+the middlewares concatenated together if you have multiple
+API slices.
+
+## March 7, 2024
+
+Today, I worked on:
+
 * Creating all of the routes for our code 
 * Added the rest of the account APIs
 
