@@ -13,8 +13,22 @@ export const workoutAPI = createAPI({
                     url: '/api/workouts',
                 }
             }
+        }),
+        getOneWorkout: builder.query({
+            query: (workout_id) => {
+                return {
+                    url: `/api/workouts/${workout_id}`,
+                }
+            }
         })
     })
 
 
 })
+
+
+
+export const {
+    useGetOneWorkoutQuery,
+    useGetAllWorkoutsQuery,
+} = workoutAPI
