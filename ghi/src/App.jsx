@@ -8,8 +8,16 @@ function App() {
     return (
         <div>
             <Nav />
-            <Sidebar />
-            <Outlet />
+            <div className='row'>
+                <div className='d-flex flex-column flex-shrink-0 p-3 text-white bg-dark' style={{maxWidth: 275}}>
+                    <Sidebar />
+                </div>
+                <div className='col'>
+                    <Outlet />
+                </div>
+            </div>
+
+
         </div>
     )
 }

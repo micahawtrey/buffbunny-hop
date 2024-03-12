@@ -12,19 +12,18 @@ class ExerciseQueries(Queries):
     def filter_exercises(self, name: str = None, muscle_group: str = None):
         try:
             exercises_list = []
-            for exercise in self.collection.find():
-                if name is not None and muscle_group is not None:
-                    if exercise.get("name") == name and exercise.get("muscle_group") == muscle_group:
-                        exercises_list.append(exercise)
-                elif name is not None:
-                    if exercise.get("name") == name:
-                        exercises_list.append(exercise)
-                elif muscle_group is not None:
-                    if exercise.get("muscle_group") == muscle_group:
-                        exercises_list.append(exercise)
-                else:
+            if name is not None and muscle_group is not None:
+                for exercise in self.collection.find({"name": name, "muscle_group": muscle_group}):
+                    exercise["id"] = str(exercise["_id"])
                     exercises_list.append(exercise)
-
+            elif name is not None:
+                for exercise in self.collection.find({"name": name}):
+                    exercise["id"] = str(exercise["_id"])
+                    exercises_list.append(exercise)
+            elif muscle_group is not None:
+                for exercise in self.collection.find({"muscle_group": muscle_group}):
+                    exercise["id"] = str(exercise["_id"])
+                    exercises_list.append(exercise)
             return exercises_list
         except Exception as e:
             return {"message": "Unable to get exercises" + str(e)}

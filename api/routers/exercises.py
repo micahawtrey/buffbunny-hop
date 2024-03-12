@@ -26,7 +26,6 @@ def filter_exercises(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=str(e)
         )
-
     return filtered_exercises
 
 @router.get("/api/exercises/{exercise_id}", response_model=Union[ExerciseOut, Error])
