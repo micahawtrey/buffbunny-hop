@@ -43,14 +43,12 @@ class AccountIn(BaseModel):
     username: str
     email: str
     password: str
-    workouts: List[WorkoutOut]
 
 class AccountOut(BaseModel):
     id: str
     full_name: str
     username: str
     email: str
-    workouts: List[WorkoutOut]
 
 class Account(AccountOut):
     hashed_password: str
