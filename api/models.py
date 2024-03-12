@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Query
+from pydantic import BaseModel
 from typing import List, Optional
 from jwtdown_fastapi.authentication import Token
+from fastapi import Query
 
 class Error(BaseModel):
     message: str

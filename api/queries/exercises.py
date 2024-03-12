@@ -13,8 +13,18 @@ class ExerciseQueries(Queries):
         try:
             exercises_list = []
             for exercise in self.collection.find():
-                exercise["exercise_name"] = str(exercise["exercise_name"])
-                exercise["muscle_group"] = str(exercise["muscle_group"])
+                if exercise_name and muscle_group:
+                    if exercise["exercise_name"] == exercise_name and exercise["muscle_group"] == muscle_group:
+                        exercises_list.append(exercise)
+                elif exercise_name:
+                    if exercise["exercise_name"] == exercise_name:
+                        exercises_list.append(exercise)
+                elif muscle_group:
+                    if exercise["muscle_group"] == muscle_group:
+                        exercises_list.append(exercise)
+                else:
+                    exercises_list.append(exercise)
+
             return exercises_list
         except Exception as e:
             return {"message": "Unable to get exercises" + str(e)}

@@ -14,30 +14,20 @@ from models import ExerciseOut, ExerciseIn, Error, Deleted, ExerciseFilter
 router = APIRouter()
 
 @router.get('/api/exercises', response_model=Union[ExerciseFilter, Error])
-async def filter_exercises(filter_criteria: ExerciseFilter,
+async def filter_exercises(
+    filter_criteria: ExerciseFilter,
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
     try:
-        filtered_exercises = repo.filter_exercises
-        # Perform Filtering Based On Criteria
-        #filtered_exercises = ExerciseFilter.objects
-
-        # Filter By Name
-        if filter_criteria.name:
-            filtered_exercises = filtered_exercises.filter(name=filter_criteria.name)
-
-        # Filter By Muscle Group
-        if filter_criteria.muscle_group:
-            filtered_exercises = filtered_exercises.filter(muscle_group=filter_criteria.muscle_group)
+        filtered_exercises = repo.filter_exercises(filter_criteria)
 
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=str(e)
         )
-    # Add More Filtering In The Future If Needed
-
+        
     return filtered_exercises
 
 @router.get("/api/exercises/{exercise_id}", response_model=Union[ExerciseOut, Error])
