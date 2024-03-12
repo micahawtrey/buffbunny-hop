@@ -9,23 +9,36 @@ from fastapi import (
 from authenticator import authenticator
 from typing import List, Union
 from queries.exercises import ExerciseQueries
-from models import ExerciseOut, ExerciseIn, Error, Deleted
+from models import ExerciseOut, ExerciseIn, Error, Deleted, ExerciseFilter
 
 router = APIRouter()
 
-@router.get("/api/exercises", response_model=Union[List[ExerciseOut], Error])
-def get_all_exercises(
+@router.get('/api/exercises', response_model=Union[ExerciseFilter, Error])
+async def filter_exercises(filter_criteria: ExerciseFilter,
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
     try:
-        exercises_list = repo.get_all_exercises()
+        filtered_exercises = repo.filter_exercises
+        # Perform Filtering Based On Criteria
+        #filtered_exercises = ExerciseFilter.objects
+
+        # Filter By Name
+        if filter_criteria.name:
+            filtered_exercises = filtered_exercises.filter(name=filter_criteria.name)
+
+        # Filter By Muscle Group
+        if filter_criteria.muscle_group:
+            filtered_exercises = filtered_exercises.filter(muscle_group=filter_criteria.muscle_group)
+
     except ValueError as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail=str(e)
-            )
-    return exercises_list
+        )
+    # Add More Filtering In The Future If Needed
+
+    return filtered_exercises
 
 @router.get("/api/exercises/{exercise_id}", response_model=Union[ExerciseOut, Error])
 def get_one_exercise(

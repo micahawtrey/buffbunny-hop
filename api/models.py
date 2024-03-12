@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Query
 from typing import List, Optional
 from jwtdown_fastapi.authentication import Token
 
@@ -21,6 +21,10 @@ class ExerciseIn(BaseModel):
 
 class ExerciseOut(ExerciseIn):
     id: str
+
+class ExerciseFilter(ExerciseIn):
+    name: str = Query(None, description="Exercise Name To Filter By")
+    muscle_group: str = Query(None, description="Muscle Group To Filter By")
 
 class WorkoutIn(BaseModel):
     name: str

@@ -9,12 +9,12 @@ class ExerciseQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "exercises"
 
-    def get_all_exercises(self):
+    def filter_exercises(self, exercise_name: str, muscle_group: str):
         try:
             exercises_list = []
             for exercise in self.collection.find():
-                exercise["id"] = str(exercise["_id"])
-                exercises_list.append(exercise)
+                exercise["exercise_name"] = str(exercise["exercise_name"])
+                exercise["muscle_group"] = str(exercise["muscle_group"])
             return exercises_list
         except Exception as e:
             return {"message": "Unable to get exercises" + str(e)}

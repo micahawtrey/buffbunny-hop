@@ -1,5 +1,13 @@
 Jory Bennett
 
+03-11-2024
+
+Mob programmed routineAPI.js. Took turns working on each element, screen sharing as we went. I worked on the getAllRoutines endpoint.
+
+03-04-2024 - 03-08-2024
+
+Down with food poisoning. Attempted to work and help my group.
+
 03-01-2024
 
 Worked on getting Routines set up. Endpoint and functionality. Had some personal issues using the merge on gitlab. Everything is pushed and merged it just doesn't properly reflect the when or how.
