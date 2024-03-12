@@ -31,6 +31,7 @@ class WorkoutOut(WorkoutIn):
 
 class RoutineIn(BaseModel):
     name: str
+    description: str
     workouts: List[WorkoutOut]
 
 class RoutineOut(RoutineIn):
