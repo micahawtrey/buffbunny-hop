@@ -9,15 +9,15 @@ class ExerciseQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "exercises"
 
-    def filter_exercises(self, exercise_name: str, muscle_group: str):
+    def filter_exercises(self,name: str, muscle_group: str):
         try:
             exercises_list = []
             for exercise in self.collection.find():
-                if exercise_name and muscle_group:
-                    if exercise["exercise_name"] == exercise_name and exercise["muscle_group"] == muscle_group:
+                if name and muscle_group:
+                    if exercise["exercise_name"] == name and exercise["muscle_group"] == muscle_group:
                         exercises_list.append(exercise)
-                elif exercise_name:
-                    if exercise["exercise_name"] == exercise_name:
+                elif name:
+                    if exercise["exercise_name"] == name:
                         exercises_list.append(exercise)
                 elif muscle_group:
                     if exercise["muscle_group"] == muscle_group:

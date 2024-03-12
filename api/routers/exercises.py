@@ -5,29 +5,30 @@ from fastapi import (
     Response,
     APIRouter,
     Request,
+    Query
 )
 from authenticator import authenticator
 from typing import List, Union
 from queries.exercises import ExerciseQueries
-from models import ExerciseOut, ExerciseIn, Error, Deleted, ExerciseFilter
+from models import ExerciseOut, ExerciseIn, Error, Deleted
 
 router = APIRouter()
 
-@router.get('/api/exercises', response_model=Union[ExerciseFilter, Error])
-async def filter_exercises(
-    filter_criteria: ExerciseFilter,
+@router.get('/api/exercises', response_model=Union[List[ExerciseOut], Error])
+def filter_exercises(
+    name: str = Query(None, description="Exercis Name To Filter By"),
+    muscle_group: str = Query(None, description="Muscle Group To Filter By"),
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
     try:
-        filtered_exercises = repo.filter_exercises(filter_criteria)
-
-    except ValueError as e:
+        filtered_exercises = repo.filter_exercises(name, muscle_group)
+    except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=str(e)
         )
-        
+
     return filtered_exercises
 
 @router.get("/api/exercises/{exercise_id}", response_model=Union[ExerciseOut, Error])

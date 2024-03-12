@@ -7,7 +7,7 @@ export const exerciseAPI = createApi({
         credentials: "include"
     }),
     endpoints: (builder) => ({
-        getAllExercises: builder.query({
+        filterExercises: builder.query({
             query: () => {
                 return {
                     url: "/api/exercises"
@@ -43,7 +43,7 @@ export const exerciseAPI = createApi({
 
 export const {
     useDeleteExerciseMutation,
-    useGetAllExercisesQuery,
+    useFilterExercisesQuery,
     useGetOneExerciseQuery,
     useUpdateExerciseMutation
 } = exerciseAPI
