@@ -12,3 +12,6 @@ Mob coding, introduced Redux into app Login, Logout, and every GET request.
 
 March 8, 2024
 Mob coded routes
+
+March 13, 2024
+References to create exercise gone -- removed workout paramater from Account In and Account Out in api/models.py -- Update to Routine In model - Description str added -- Added Redux into Singup Form
