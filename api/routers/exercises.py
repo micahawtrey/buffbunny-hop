@@ -2,11 +2,9 @@ from fastapi import (
     Depends,
     HTTPException,
     status,
-    Response,
-    APIRouter,
-    Request
+    APIRouter
 )
-from pydantic import Field
+
 from authenticator import authenticator
 from typing import List, Union
 from queries.exercises import ExerciseQueries

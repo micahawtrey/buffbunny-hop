@@ -1,9 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+
+const X_RAPID_API = 'https://api.third-party.com'
+
 export const exerciseAPI = createApi({
     reducerPath: "exerciseAPI",
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_API_HOST,
+        baseUrl: X_RAPID_API,
         credentials: "include"
     }),
     endpoints: (builder) => ({
