@@ -12,3 +12,6 @@ Mob coding, introduced Redux into app Login, Logout, and every GET request.
 
 March 8, 2024
 Mob coded routes
+
+March 13, 2024
+Removed all references to workout from front end, added param to Routine model.
