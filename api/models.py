@@ -67,3 +67,11 @@ class HttpError(BaseModel):
 class DeleteStatus(BaseModel):
     success: bool
     message: str
+
+class RecentWorkoutIn(BaseModel):
+    name: str
+
+class RecentWorkoutOut(RecentWorkoutIn):
+    id: str
+    created_on: str
+    account_id: str
