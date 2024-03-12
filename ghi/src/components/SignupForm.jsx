@@ -1,49 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import { useCreateAccountMutation } from '../app/accountAPI';
+import { useNavigate } from 'react-router-dom';
+
 
 function SignupForm() {
-  const [clients, setClients] = useState([]);
+  const [createAccount, createAccountStatus] = useCreateAccountMutation()
+  const navigate = useNavigate()
+  const [errorMessage, setErrorMessage] = useState("")
+
   const [formData, setFormData] = useState({
-    name: '',
-    user_name: '',
-    email_address: '',
+    full_name: '',
+    username: '',
+    email: '',
     password: '',
     password_confirmation: '',
   });
 
-  const fetchClients = async () => {
-    const url = 'http://localhost:8000/api/clients/';
-    const response = await fetch(url);
-    if (response.ok) {
-      const data = await response.json();
-      setClients(data.clients);
-    }
-  };
-
   useEffect(() => {
-    fetchClients();
-  }, []);
+    if (createAccountStatus.isSuccess) navigate("/dashboard")
+    if (createAccountStatus.isError) {
+    setErrorMessage(createAccountStatus.error)
+  }
+  }, [createAccountStatus, navigate]);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    const url = 'http://localhost:8000/api/clients/';
-    const fetchOptions = {
-      method: 'POST',
-      body: JSON.stringify(formData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const response = await fetch(url, fetchOptions);
-    if (response.ok) {
-      setFormData({
-        name: '',
-        user_name: '',
-        email_address: '',
-        password: '',
-        password_confirmation: '',
-      });
+    if (formData.password === formData.password_confirmation) {
+      createAccount(formData)
+    }else{
+      setErrorMessage("Passwords do not match");
     }
   };
 
@@ -68,6 +53,7 @@ function SignupForm() {
             <div className="card-body">
               <h1 className="card-title">Sign Up</h1>
               <form onSubmit={handleSubmit} id="signup-form">
+                {errorMessage && <div className='alert alert-danger'>Your signup credentials did not match.</div>}
                 <div className="mb-3">
                   <input onChange={handleFormChange} value={formData.name} required type='text' name='name' id='name' className='form-control' />
                   <label htmlFor="name">Name</label>

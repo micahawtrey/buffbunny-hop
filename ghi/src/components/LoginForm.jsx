@@ -17,7 +17,7 @@ function LoginForm() {
     if (loginStatus.isError) setErrorMessage(loginStatus.error)
   }, [loginStatus, navigate])
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
       event.preventDefault();
       login(formData)
   };
