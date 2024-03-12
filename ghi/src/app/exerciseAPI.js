@@ -21,15 +21,6 @@ export const exerciseAPI = createApi({
                 }
             }
         }),
-        createExercise: builder.mutation({
-            query: (body) => {
-                return {
-                    url: "/api/exercises",
-                    method: "POST",
-                    body
-                }
-            }
-        }),
         updateExercise: builder.mutation({
             query: (body, exercise_id) => {
                 return {
@@ -51,7 +42,6 @@ export const exerciseAPI = createApi({
 })
 
 export const {
-    useCreateExerciseMutation,
     useDeleteExerciseMutation,
     useGetAllExercisesQuery,
     useGetOneExerciseQuery,

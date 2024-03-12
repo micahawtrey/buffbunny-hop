@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Exercise from './components/Exercise'
 import FilterExercises from './components/FilterExercises'
-import CreateExercise from './components/CreateExercise'
 import LoginForm from './components/LoginForm'
 import Main from './components/MainPage'
 import Routine from './components/Routine'
@@ -29,7 +28,6 @@ const router = createBrowserRouter([
             {path: "signup", element: <SignupForm />},
             {path: "dashboard", element: <UserDashboard />},
             {path: "exercises/:exercise_id", element: <Exercise />},
-            {path: "exercises/create", element: <CreateExercise />},
             {path: "exercises/filter", element: <FilterExercises />},
             {path: "workouts/:workout_id", element: <Workout />},
             {path: "workouts/create", element: <CreateWorkout />},
