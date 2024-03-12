@@ -1,5 +1,8 @@
 Trevor Cannatella
 
+03-11-2024
+Today, we all coded togather on some of our front-end API. Specifically, workouts and routine. I was able to understand the functionality of the code better by watching other people code. Also, I now have a better understanding of the store.js.
+
 03-07-2024
 Today,finished the routes on the front end. We utilized the zoom recordings and ract documenttions to get our routes to work. It was chellenging, had to play with it a lot, but in the end got a solid foundation for our routes. My ah-ha momemt was understanding how the children routes worked in the main.jsx.
 
