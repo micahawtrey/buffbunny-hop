@@ -4,13 +4,15 @@ import { accountApi } from './accountAPI'
 import { routineAPI } from './routineAPI'
 import { workoutAPI } from './workoutAPI'
 import { exerciseAPI } from './exerciseAPI'
+import { recentWorkoutsAPI } from './recentWorkoutsAPI'
 
 export const store = configureStore({
     reducer: {
         [accountApi.reducerPath]: accountApi.reducer,
         [routineAPI.reducerPath]: routineAPI.reducer,
         [workoutAPI.reducerPath]: workoutAPI.reducer,
-        [exerciseAPI.reducerPath]: exerciseAPI.reducer
+        [exerciseAPI.reducerPath]: exerciseAPI.reducer,
+        [recentWorkoutsAPI.reducerPath]: recentWorkoutsAPI.reducer,
         // query: loginReducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -18,7 +20,8 @@ export const store = configureStore({
             accountApi.middleware,
             routineAPI.middleware,
             workoutAPI.middleware,
-            exerciseAPI.middleware
+            exerciseAPI.middleware,
+            recentWorkoutsAPI.middleware
             ),
 
 })
