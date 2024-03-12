@@ -9,18 +9,18 @@ class ExerciseQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "exercises"
 
-    def filter_exercises(self,name: str, muscle_group: str):
+    def filter_exercises(self, name: str = None, muscle_group: str = None):
         try:
             exercises_list = []
             for exercise in self.collection.find():
-                if name and muscle_group:
-                    if exercise["name"] == name and exercise["muscle_group"] == muscle_group:
+                if name is not None and muscle_group is not None:
+                    if exercise.get("name") == name and exercise.get("muscle_group") == muscle_group:
                         exercises_list.append(exercise)
-                elif name:
-                    if exercise["name"] == name:
+                elif name is not None:
+                    if exercise.get("name") == name:
                         exercises_list.append(exercise)
-                elif muscle_group:
-                    if exercise["muscle_group"] == muscle_group:
+                elif muscle_group is not None:
+                    if exercise.get("muscle_group") == muscle_group:
                         exercises_list.append(exercise)
                 else:
                     exercises_list.append(exercise)

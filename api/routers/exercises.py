@@ -4,9 +4,9 @@ from fastapi import (
     status,
     Response,
     APIRouter,
-    Request,
-    Query
+    Request
 )
+from pydantic import Field
 from authenticator import authenticator
 from typing import List, Union
 from queries.exercises import ExerciseQueries
@@ -16,8 +16,8 @@ router = APIRouter()
 
 @router.get('/api/exercises', response_model=Union[List[ExerciseOut], Error])
 def filter_exercises(
-    name: str = Query(None, description="Exercis Name To Filter By"),
-    muscle_group: str = Query(None, description="Muscle Group To Filter By"),
+    name: str = None,
+    muscle_group: str = None,
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseQueries = Depends()
 ):
