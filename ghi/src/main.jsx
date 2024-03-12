@@ -14,7 +14,6 @@ import Routine from './components/Routine'
 import CreateRoutine from './components/RoutineCreation'
 import SignupForm from './components/SignupForm'
 import UserDashboard from './components/UserDashboard'
-import Workout from './components/Workout'
 import CreateWorkout from './components/CreateWorkout'
 
 
@@ -29,7 +28,6 @@ const router = createBrowserRouter([
             {path: "dashboard", element: <UserDashboard />},
             {path: "exercises/:exercise_id", element: <Exercise />},
             {path: "exercises/filter", element: <FilterExercises />},
-            {path: "workouts/:workout_id", element: <Workout />},
             {path: "workouts/create", element: <CreateWorkout />},
             {path: "routines/:routine_id", element: <Routine />},
             {path: "routines/create", element: <CreateRoutine />}
