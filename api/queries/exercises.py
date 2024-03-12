@@ -14,10 +14,10 @@ class ExerciseQueries(Queries):
             exercises_list = []
             for exercise in self.collection.find():
                 if name and muscle_group:
-                    if exercise["exercise_name"] == name and exercise["muscle_group"] == muscle_group:
+                    if exercise["name"] == name and exercise["muscle_group"] == muscle_group:
                         exercises_list.append(exercise)
                 elif name:
-                    if exercise["exercise_name"] == name:
+                    if exercise["name"] == name:
                         exercises_list.append(exercise)
                 elif muscle_group:
                     if exercise["muscle_group"] == muscle_group:
