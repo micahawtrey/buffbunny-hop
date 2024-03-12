@@ -1,39 +1,30 @@
-import { useState } from 'react';
-// import { reset, setLogin } from './app/loginSlice';
+import { useState, useEffect } from 'react';
+import { useLoginMutation } from '../app/accountAPI';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
-  // const [login, setLogin] = useState([]);
+  const [login, loginStatus] = useLoginMutation()
+  const navigate = useNavigate()
+  const [errorMessage, setErrorMessage] = useState("")
 
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
 
+  useEffect(() => {
+    if (loginStatus.isSuccess) navigate("/dashboard")
+    if (loginStatus.isError) setErrorMessage(loginStatus.error)
+  }, [loginStatus, navigate])
+
   const handleSubmit = async (event) => {
       event.preventDefault();
-
-      const url = 'http://localhost:8000/api/clients/';
-      const fetchOptions = {
-          method: "POST",
-          body: JSON.stringify(formData),
-          headers: {
-              'Content-Type': 'application/json',
-          }
-      };
-
-      const response = await fetch(url, fetchOptions);
-      if (response.ok) {
-        setFormData({
-          user_name: '',
-          password: '',
-        });
-      }
+      login(formData)
   };
 
   const handleFormChange = (event) => {
     const value = event.target.value;
     const inputName = event.target.name;
-
     setFormData({
       ...formData,
       [inputName]: value
@@ -51,13 +42,13 @@ function LoginForm() {
           <div className="card-body">
             <h1 className="card-title">Login</h1>
             <form onSubmit={handleSubmit} id="login-form">
-
-              <div className="mb-3">
-                <input onChange={handleFormChange} value={formData.user_name} placeholder="User Name" required type='text' name='user_name' id='user_name' className='form-control' />
-                <label htmlFor="user_name">User Name</label>
+              {errorMessage && <div className='alert alert-danger'>Invalid credentials.</div>}
+              <div className="mb-3 form-floating">
+                <input onChange={handleFormChange} value={formData.username} placeholder="User Name" required type='text' name='username' id='username' className='form-control' />
+                <label htmlFor="username">User Name</label>
               </div>
 
-              <div className="mb-3">
+              <div className="mb-3 form-floating">
                 <input onChange={handleFormChange} value={formData.password} placeholder="Password" required type='password' name='password' id='password' className='form-control' />
                 <label htmlFor="password">Password</label>
               </div>
