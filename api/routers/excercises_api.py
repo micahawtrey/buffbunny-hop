@@ -24,26 +24,9 @@ async def list_exercises_api(queries: ExerciseApiQueries = Depends()):
 
 
 
-# @router.get('/api/exercises_api/{name}', response_model=ExerciseApiOut)
-# def details_exercise_api(name: str):
-#     print(f"Searching for exercise: {name}")
-#     exercise_data = queries.get_exercise_details_api(name)
-#     print(f"Exercise data: {exercise_data}")
-#     if exercise_data:
-#         return ExerciseApiOut(name=exercise_data['name'], target=exercise_data['target'])
-#     else:
-#         raise HTTPException(status_code=404, detail="Exercise not found")
-
 @router.get('/api/exercises_api/{name}', response_model=ExerciseApiOut)
-def details_exercise_api(name: str):
-    print(f"Searching for exercise: {name}")
-    exercise_data = queries.get_exercise_details_api(name)
-    print(f"Exercise data: {exercise_data}")
-    if exercise_data and 'exercise' in exercise_data:
-        # Extract names of all exercises
-        exercise_names = [exercise['name'] for exercise in exercise_data['exercise']]
-        # Return the list of exercise names
-        return {"exercise_names": exercise_names}
-    else:
-        raise HTTPException(status_code=404, detail="Exercise not found")
-
+def details_exercise_api(
+    name: str,
+    queries: ExerciseApiQueries = Depends()
+):
+    return queries.get_exercise_details_api(name=name)
