@@ -58,7 +58,7 @@ export const exerciseAPI = createApi({
         getExerciseApiByTarget: builder.query({
             query: (target) => {
                 return {
-                    url: `/api/exercises_api/${target}`
+                    url: `/api/exercises_api/target/${target}`
                 }
             }
         })
