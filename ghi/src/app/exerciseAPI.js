@@ -40,6 +40,27 @@ export const exerciseAPI = createApi({
                     method: "DELETE"
                 }
             }
+        }),
+        getExerciseApiDetails: builder.query({
+            query: (name) => {
+                return {
+                    url: `/api/exercises_api/${name}`,
+                }
+            }
+        }),
+        getExerciseApiList: builder.query({
+            query: () => {
+                return {
+                    url: "/api/exercises_api"
+                }
+            }
+        }),
+        getExerciseApiByTarget: builder.query({
+            query: (target) => {
+                return {
+                    url: `/api/exercises_api/${target}`
+                }
+            }
         })
     })
 })
@@ -48,5 +69,8 @@ export const {
     useDeleteExerciseMutation,
     useFilterExercisesQuery,
     useGetOneExerciseQuery,
-    useUpdateExerciseMutation
+    useUpdateExerciseMutation,
+    useGetExerciseApiDetailsQuery,
+    useGetExerciseApiByTargetQuery,
+    useGetExerciseApiListQuery
 } = exerciseAPI
