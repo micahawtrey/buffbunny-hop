@@ -4,3 +4,4 @@ pytest
 pymongo==4.3.3
 passlib[bcrypt]
 jwtdown-fastapi>=0.2.0
+requests==2.31.0

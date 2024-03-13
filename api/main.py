@@ -7,6 +7,7 @@ from routers import exercises
 from routers import workouts
 from routers import routines
 from routers import recent_workouts
+from routers import excercises_api
 
 app = FastAPI()
 app.include_router(authenticator.router)
@@ -14,6 +15,7 @@ app.include_router(accounts.router, tags=["Accounts"])
 app.include_router(exercises.router, tags=["Exercises"])
 app.include_router(workouts.router, tags=["Workouts"])
 app.include_router(routines.router, tags=["Routines"])
+app.include_router(excercises_api.router, tags=["Exercise API"])
 app.include_router(recent_workouts.router, tags=["Recent Workouts"])
 
 app.add_middleware(
