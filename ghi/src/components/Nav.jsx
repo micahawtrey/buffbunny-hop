@@ -25,6 +25,9 @@ function Nav() {
             <li className="nav-item">
               <NavLink className="nav-link" to={"/dashboard"}>Dashboard</NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to={"/routine"}>My Routine</NavLink>
+            </li>
           </ul>
         </div>
       </div>

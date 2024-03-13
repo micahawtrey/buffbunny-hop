@@ -1,10 +1,7 @@
-import React from 'react';
-
 function UserDashboard() {
   return (
     <div className="m-4">
-      <div className="col-10 shadow text-center"></div>
-      <div className="col-10">
+      <div className="">
         <div className="border shadow mb-4">
           <div className="text-center
           ">
@@ -24,7 +21,7 @@ function UserDashboard() {
           </div>
         </div>
       </div>
-      <div className="col-10">
+      <div className="">
   <div className="border shadow mb-4">
     <div className="text-center">
       <h2>Recent Workout</h2>
