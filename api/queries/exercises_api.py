@@ -23,5 +23,15 @@ class ExerciseApiQueries:
             }
             res = requests.get(url, headers=headers)
             data = res.json()
-            print('HERE',data)
             return data[0]
+
+    def get_exercise_target_api(self, target: str):
+            url = f'https://exercisedb.p.rapidapi.com/exercises/target/{target}'
+            headers = {
+                'X-RapidAPI-Key': RAPIDAPI_KEY,
+                'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+            }
+            res = requests.get(url, headers=headers)
+            data = res.json()
+            print('HERE',data)
+            return data
