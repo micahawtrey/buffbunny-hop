@@ -73,6 +73,18 @@ class DeleteStatus(BaseModel):
     success: bool
     message: str
 
+class ExerciseApiId(BaseModel):
+    name: str
+    target: str
+    url: str
+
+class ExerciseApiOut(BaseModel):
+    name : str
+    target: str
+
+class ExerciseApiList(BaseModel):
+   exercise: List[ExerciseApiId]
+
 class RecentWorkoutIn(BaseModel):
     name: str
 

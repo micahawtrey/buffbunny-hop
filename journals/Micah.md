@@ -1,4 +1,19 @@
-## March 7, 2024
+## March 12, 2024
+
+Today, I worked on:
+
+* Integrating the Redux into login form
+* Walked Andrew through doing the same for signup form
+
+We mob programmed today to figure out integrating Redux. 
+
+Today, I discovered that Redux status can be used to allow
+a page to navigate, or to store an error message. I also
+learned that a get request cannot have a body, so you need
+to ensure that you are not sending a json object. You instead
+need to send many individual pieces.
+
+## March 11, 2024
 
 Today, I worked on:
 
