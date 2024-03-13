@@ -81,6 +81,8 @@ class ExerciseApiId(BaseModel):
 class ExerciseApiOut(BaseModel):
     name : str
     target: str
+    gifUrl: str
+    instructions: List[str]
 
 class ExerciseApiList(BaseModel):
    exercise: List[ExerciseApiId]
