@@ -15,12 +15,14 @@ import CreateRoutine from './components/RoutineCreation'
 import SignupForm from './components/SignupForm'
 import UserDashboard from './components/UserDashboard'
 import CreateWorkout from './components/CreateWorkout'
+import ErrorElement from './components/errorPage.jsx'
 
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
+        errorElement: <ErrorElement />,
         children: [
             {index: true, element: <Main />},
             {path: "login", element: <LoginForm />},
