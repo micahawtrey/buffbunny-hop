@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCreateWorkoutMutation } from '../app/workoutAPI';
-import { useGetExerciseApiByTargetQuery } from '../app/exerciseAPI';
+import { useGetExerciseApiListQuery } from '../app/exerciseAPI';
 
 function CreateWorkout (){
+    const { data: exerciseList, isLoading } = useGetExerciseApiListQuery()
+    console.log({exerciseList})
     const targets = [
         "abductors",
         "abs",
@@ -42,7 +44,6 @@ function CreateWorkout (){
     const [workout, workoutStatus] = useCreateWorkoutMutation()
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
-    const targetQuery = useGetExerciseApiByTargetQuery()
 
     const addNewExercise = () => {
         const exerciseKey = `exercise${exerciseNum}`
@@ -93,11 +94,11 @@ function CreateWorkout (){
         if (workoutStatus.isError) setErrorMessage(workoutStatus.error)
     }, [workoutStatus, navigate])
 
-    const filterMuscleGroup = (event, exerciseKey) => {
-        const { data } = targetQuery(event.target.value)
+    const filterMuscleGroup = async (data, exerciseKey) => {
+        const filteredExercises = exerciseList.exercise.filter((exercise) => exercise.target === data)
         setExercises(prevExercise => {
             const newExercise = {...prevExercise}
-            newExercise[exerciseKey][exercises] = data
+            newExercise[exerciseKey]["exercises"] = filteredExercises
             return newExercise
         })
     }
@@ -112,6 +113,11 @@ function CreateWorkout (){
         }
     }
 
+    if (isLoading) {
+        return (
+            <div>Loading...</div>
+        )
+    }
 
    return (
   <div style={{ paddingTop: '20px' }}>
@@ -129,22 +135,25 @@ function CreateWorkout (){
             return (
             <div className="d-flex flex-grow-1" key={exercise.exerciseKey}>
                 <div className="form-group w-50">
-                    <select className="form-select"
-                    aria-label="Select Muscle Group"
-                    onChange={(event, exerciseKey) =>{
-                        setExerciseValues(event, exerciseKey)
-                        filterMuscleGroup(event, exerciseKey)}}>
-                        <option defaultValue>Select Muscle Group</option>
-                        {targets.map((target, index) => (
-                        <option key={index} value={target}>{target}</option>
-                        ))}
+                    <select
+                        className="form-select"
+                        aria-label="Select Muscle Group"
+                        name="muscle_group"
+                        onChange={(event) => {
+                            setExerciseValues(event, exerciseKey)
+                            filterMuscleGroup(event.target.value, exerciseKey)
+                            }}>
+                            <option value="">Select Muscle Group</option>
+                            {targets.map((target, index) => (
+                                <option key={index} value={target}>{target}</option>
+                            ))}
                     </select>
                 </div>
                 <div className="form-group w-50">
                     <select className="form-select" aria-label="Select Exercise">
                         <option defaultValue>Select Exercise</option>
                         {exercise.exercises.map(exercise => (
-                            <option key={exercise.name} value={exercise.name}>{exercise.name}</option>
+                            <option key={exercise.url} value={exercise.name}>{exercise.name}</option>
                         ))}
                     </select>
                 </div>

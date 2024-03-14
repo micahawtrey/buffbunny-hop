@@ -2,7 +2,7 @@ import requests
 from api_keys import RAPIDAPI_KEY
 
 class ExerciseApiQueries:
-    def get_all_exercises_api(self, limit: int = 100):
+    def get_all_exercises_api(self, limit: int = 1400):
         url = 'https://exercisedb.p.rapidapi.com/exercises'
         params = {
              'limit': limit
