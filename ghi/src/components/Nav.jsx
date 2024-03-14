@@ -8,7 +8,7 @@ function Nav() {
   const navigate = useNavigate()
 
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-info">
         <div className="container-fluid d-flex justify-content-start">
@@ -20,7 +20,10 @@ function Nav() {
       </nav>
     )
   }
-  const account_id = data.account.id
+  let account_id = ""
+  if (!isLoading && data) {
+    account_id = data.account.id
+  }
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-info">
       <div className="container-fluid">
@@ -52,7 +55,7 @@ function Nav() {
           </ul>
           {data &&
           <button
-            className='btn btn-danger'
+            className='btn btn-danger me-5'
             onClick={() => {
             logout()
             navigate("/")

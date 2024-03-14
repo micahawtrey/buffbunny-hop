@@ -34,11 +34,8 @@ function LoginForm() {
   return (
   <div className="my-5 container">
     <div className="row">
-      <div className="col col-sm-auto">
-        <img width="300" className="bg-white rounded shadow d-block mx-auto mb-4" src="" alt=""/>
-      </div>
       <div className="col">
-        <div className="card shadow">
+        <div className="card shadow mx-5">
           <div className="card-body">
             <h1 className="card-title">Login</h1>
             <form onSubmit={handleSubmit} id="login-form">
