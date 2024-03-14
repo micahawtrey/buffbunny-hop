@@ -35,7 +35,8 @@ function CreateWorkout (){
             rep: "",
             exercises: [],
             exerciseKey: "exercise0"
-        }
+        },
+
     })
     const [exerciseNum, setExerciseNum] = useState(1)
     const [workout, workoutStatus] = useCreateWorkoutMutation()
@@ -53,7 +54,7 @@ function CreateWorkout (){
                 set: "",
                 rep: "",
                 exercises: [],
-                exerciseKey: "exercise0"
+                exerciseKey
             }
         })
         setExerciseNum(exerciseNum + 1)
@@ -124,10 +125,15 @@ function CreateWorkout (){
     </div>
     <div className="d-flex flex-wrap" style={{ border: '1px solid #ddd', borderRadius: '10px', padding: '10px' }}>
         {Object.values(exercises).map(exercise => {
+            const exerciseKey = exercise.exerciseKey
             return (
             <div className="d-flex flex-grow-1" key={exercise.exerciseKey}>
                 <div className="form-group w-50">
-                    <select className="form-select" aria-label="Select Muscle Group">
+                    <select className="form-select"
+                    aria-label="Select Muscle Group"
+                    onChange={(event, exerciseKey) =>{
+                        setExerciseValues(event, exerciseKey)
+                        filterMuscleGroup(event, exerciseKey)}}>
                         <option defaultValue>Select Muscle Group</option>
                         {targets.map((target, index) => (
                         <option key={index} value={target}>{target}</option>
