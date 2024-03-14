@@ -32,13 +32,9 @@ function CreateWorkout (){
             name: "",
             muscle_group: "",
             set: "",
-            rep: ""
-        }
-    })
-    const [exerciseTargets, setExerciseTargets] = useState({
-        exercise0: {
-            target: targets,
-            exercises: []
+            rep: "",
+            exercises: [],
+            exerciseKey: "exercise0"
         }
     })
     const [exerciseNum, setExerciseNum] = useState(1)
@@ -55,14 +51,9 @@ function CreateWorkout (){
                 name: "",
                 muscle_group: "",
                 set: "",
-                rep: ""
-            }
-        })
-        setExerciseTargets({
-            ...exercises,
-            [exerciseKey]: {
-                target: targets,
-                exercises: []
+                rep: "",
+                exercises: [],
+                exerciseKey: "exercise0"
             }
         })
         setExerciseNum(exerciseNum + 1)
@@ -103,10 +94,10 @@ function CreateWorkout (){
 
     const filterMuscleGroup = (event, exerciseKey) => {
         const { data } = targetQuery(event.target.value)
-        setExerciseTargets(prevExerciseTargets => {
-            const newExerciseTargets = {...prevExerciseTargets}
-            newExerciseTargets[exerciseKey][exercises] = data
-            return newExerciseTargets
+        setExercises(prevExercise => {
+            const newExercise = {...prevExercise}
+            newExercise[exerciseKey][exercises] = data
+            return newExercise
         })
     }
 
@@ -132,34 +123,38 @@ function CreateWorkout (){
       <label htmlFor="workoutDescription">Workout Description</label>
     </div>
     <div className="d-flex flex-wrap" style={{ border: '1px solid #ddd', borderRadius: '10px', padding: '10px' }}>
-      <div className="d-flex flex-grow-1">
-        <div className="form-group w-50">
-          <select className="form-select" aria-label="Select Muscle Group">
-             <option defaultValue>Select Muscle Group</option>
-            {targets.map((target, index) => (
-              <option key={index} value={target}>{target}</option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group w-50">
-          <select className="form-select" aria-label="Select Exercise">
-            <option defaultValue>Select Exercise</option>
-                        {exerciseTargets[`exercise${exerciseNum - 1}`]?.exercises.map((exercise, index) => (
-                            <option key={index} value={exercise}>{exercise}</option>
+        {Object.values(exercises).map(exercise => {
+            return (
+            <div className="d-flex flex-grow-1" key={exercise.exerciseKey}>
+                <div className="form-group w-50">
+                    <select className="form-select" aria-label="Select Muscle Group">
+                        <option defaultValue>Select Muscle Group</option>
+                        {targets.map((target, index) => (
+                        <option key={index} value={target}>{target}</option>
                         ))}
-          </select>
-        </div>
-        <div className="ms-4 d-flex">
-          <div className="form-floating me-2">
-            <input type="number" className="form-control form-control-sm" id="sets" placeholder="Sets" min="1" />
-            <label htmlFor="sets">Sets</label>
-          </div>
-          <div className="form-floating">
-            <input type="number" className="form-control form-control-sm" id="reps" placeholder="Reps" min="1" />
-            <label htmlFor="reps">Reps</label>
-          </div>
-        </div>
-      </div>
+                    </select>
+                </div>
+                <div className="form-group w-50">
+                    <select className="form-select" aria-label="Select Exercise">
+                        <option defaultValue>Select Exercise</option>
+                        {exercise.exercises.map(exercise => (
+                            <option key={exercise.name} value={exercise.name}>{exercise.name}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="ms-4 d-flex">
+                <div className="form-floating me-2">
+                    <input type="number" className="form-control form-control-sm" id="sets" placeholder="Sets" min="1" />
+                    <label htmlFor="sets">Sets</label>
+                </div>
+                <div className="form-floating">
+                    <input type="number" className="form-control form-control-sm" id="reps" placeholder="Reps" min="1" />
+                    <label htmlFor="reps">Reps</label>
+                </div>
+                </div>
+            </div>
+            )
+        })}
     </div>
   </div>
 );
