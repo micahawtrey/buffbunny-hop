@@ -120,9 +120,50 @@ function CreateWorkout (){
         }
     }
 
-    return (
-        <div></div>
-    )
+
+   return (
+  <div style={{ paddingTop: '20px' }}>
+    <div className="form-floating mb-3">
+      <input type="text" className="form-control" id="workoutName" placeholder="Workout Name" />
+      <label htmlFor="workoutName">Workout Name</label>
+    </div>
+    <div className="form-floating mb-3">
+      <textarea className="form-control" id="workoutDescription" placeholder="Workout Description"></textarea>
+      <label htmlFor="workoutDescription">Workout Description</label>
+    </div>
+    <div className="d-flex flex-wrap" style={{ border: '1px solid #ddd', borderRadius: '10px', padding: '10px' }}>
+      <div className="d-flex flex-grow-1">
+        <div className="form-group w-50">
+          <select className="form-select" aria-label="Select Muscle Group">
+             <option defaultValue>Select Muscle Group</option>
+            {targets.map((target, index) => (
+              <option key={index} value={target}>{target}</option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group w-50">
+          <select className="form-select" aria-label="Select Exercise">
+            <option defaultValue>Select Exercise</option>
+                        {exerciseTargets[`exercise${exerciseNum - 1}`]?.exercises.map((exercise, index) => (
+                            <option key={index} value={exercise}>{exercise}</option>
+                        ))}
+          </select>
+        </div>
+        <div className="ms-4 d-flex">
+          <div className="form-floating me-2">
+            <input type="number" className="form-control form-control-sm" id="sets" placeholder="Sets" min="1" />
+            <label htmlFor="sets">Sets</label>
+          </div>
+          <div className="form-floating">
+            <input type="number" className="form-control form-control-sm" id="reps" placeholder="Reps" min="1" />
+            <label htmlFor="reps">Reps</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 }
 
 export default CreateWorkout

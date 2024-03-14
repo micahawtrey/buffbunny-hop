@@ -28,6 +28,9 @@ function Nav() {
             <li className="nav-item">
               <NavLink className="nav-link" to={"/routine"}>My Routine</NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to={"/workouts/create"}>Create Workout </NavLink>
+            </li>
           </ul>
         </div>
       </div>
