@@ -31,7 +31,7 @@ const router = createBrowserRouter([
             {path: "exercises/:exercise_id", element: <Exercise />},
             {path: "exercises/filter", element: <FilterExercises />},
             {path: "workouts/create", element: <CreateWorkout />},
-            {path: "routines/:routine_id", element: <Routine />},
+            {path: "routines/:account_id", element: <Routine />},
             {path: "routines/create", element: <CreateRoutine />}
             ]
     },

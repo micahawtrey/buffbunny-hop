@@ -1,6 +1,26 @@
 import { NavLink } from 'react-router-dom';
+import { useGetTokenQuery, useLogoutMutation } from '../app/accountAPI';
+import { useNavigate } from 'react-router-dom';
 
 function Nav() {
+  const { data, isLoading } = useGetTokenQuery()
+  const [logout, logoutStatus] = useLogoutMutation()
+  const navigate = useNavigate()
+
+
+  if (isLoading || !data) {
+    return (
+      <nav className="navbar navbar-expand-lg navbar-light bg-info">
+        <div className="container-fluid d-flex justify-content-start">
+          <NavLink to={"/"}>
+            <img src="/BUFFBunny_Hop_Logo-nobg.png" alt="A muscular bunny flexing above the company name" className='me-3' width={100}/>
+          </NavLink>
+          <NavLink className="navbar-brand" to={"/"}>Buffbunny Hop</NavLink>
+        </div>
+      </nav>
+    )
+  }
+  const account_id = data.account.id
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-info">
       <div className="container-fluid">
@@ -13,22 +33,32 @@ function Nav() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <NavLink className="nav-link" aria-current="page" to={"/"}>Home</NavLink>
-            </li>
+            {!data &&
             <li className="nav-item">
               <NavLink className="nav-link" to={"/login"}>Login</NavLink>
-            </li>
+            </li>}
+            {!data &&
             <li className="nav-item">
               <NavLink className="nav-link" to={"/signup"}>Sign Up</NavLink>
-            </li>
+            </li>}
+            {data &&
             <li className="nav-item">
               <NavLink className="nav-link" to={"/dashboard"}>Dashboard</NavLink>
-            </li>
+            </li>}
+            {data &&
             <li className="nav-item">
-              <NavLink className="nav-link" to={"/routine"}>My Routine</NavLink>
-            </li>
+              <NavLink className="nav-link" to={`/routine/${account_id}`}>My Routine</NavLink>
+            </li>}
           </ul>
+          {data &&
+          <button
+            className='btn btn-danger'
+            onClick={() => {
+            logout()
+            navigate("/")
+            }}>
+              Logout
+          </button>}
         </div>
       </div>
     </nav>
