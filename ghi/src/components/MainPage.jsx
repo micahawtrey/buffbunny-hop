@@ -1,58 +1,67 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Nav from './Nav';
-// import GYM_ACCESS_KEY from '../api_keys';
-// import '../styles.css';
 
-function Main() {
-  // const [imageUrl, setImageUrl] = useState('');
+const MainPage = () => {
+    const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
+    const [apiKey, setApiKey] = useState('');
 
-  useEffect(() => {
-    // const fetchImage = async () => {
-    //   try {
-    //     const response = await fetch('https://api.pexels.com/v1/search?query=gym&per_page=10', {
-    //       headers: {
-    //         Authorization: `Bearer ${GYM_ACCESS_KEY}`,
-    //       },
-    //     });
-    //     const data = await response.json();
-    //     if (response.ok && data.photos && data.photos.length > 0) {
-    //       const randomIndex = Math.floor(Math.random() * data.photos.length);
-    //       setImageUrl(data.photos[randomIndex].src.medium);
-    //     } else {
-    //       console.error('Error fetching image:', data);
-    //     }
-    //   } catch (error) {
-    //     console.error('Error fetching image:', error);
-    //   }
-    // };
+    useEffect(() => {
+        const fetchApiKey = async () => {
+            try {
+                const response = await fetch('/api/api-key');
+                const data = await response.json();
+                setApiKey(data.api_key);
+            } catch (error) {
+                console.error('Error Fetching API Key:', error);
+            }
+        };
+        fetchApiKey
+    }, []);
 
-    // fetchImage();
-  }, []);
+    useEffect(() => {
+        if (apiKey) {
+            const fetchBackgroundImage = async () => {
+                const url = `https://api.pexels.com/v1/search?query=gym&per_page=1`;
+                try {
+                    const response = await fetch(url, {
+                        headers: {
+                            Authorization: apiKey
+                        }
+                    });
+                    const data = await response.json();
+                    if (data.photos.length > 0) {
+                        setBackgroundImageUrl(data.photos[0].src.original);
+                    }
+                }   catch (error) {
+                    console.error('Error fetching image from Pexels:', error);
+                }
+            };
 
-  // Function to trigger explode animation
-  // const explode = (element) => {
-  //   element.classList.add('explode');
-  //   setTimeout(() => {
-  //     element.classList.remove('explode');
-  //   }, 500); // Duration of the explode animation (in milliseconds)
-  // };
+            fetchBackgroundImage();
+        }
+    }, [apiKey]);
 
-  return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col text-center mt-5">
-          <h1>Buffbunny Hop</h1>
-          <p>From Fluff to Buff</p>
-          <div className="d-flex justify-content-center">
-            <Link to="/login" className="btn btn-primary mx-2">Log In</Link>
-            <Link to="/signup" className="btn btn-success mx-2">Sign Up</Link>
-          </div>
-          {/* {imageUrl && <img src={imageUrl} alt="Gym" className="explode-on-click" onClick={(e) => explode(e.target)} />} */}
+    const containerStyle = {
+        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '100vh',
+        color: '#fff'
+    };
+
+
+     return (
+        <div className="container" style={containerStyle}>
+            <h1>Buffbunny Hop</h1>
+            <p>From Fluff To Buff</p>
+            <Link to="/login" className="btn btn-primary">
+                Login
+            </Link>
+            <Link to="/signup" className="btn btn-secondary">
+                Sign Up
+            </Link>
         </div>
-      </div>
-    </div>
-  );
-}
+    );
+};
 
-export default Main;
+export default MainPage;

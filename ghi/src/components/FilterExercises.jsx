@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+//import React, { useState, useEffect, useCallback } from 'react';
+//import { useDispatch, useSelector } from 'react-redux';
 // import { fetchExercises } from '../actions/exerciseActions';
 
 const FilterExercise = () => {
