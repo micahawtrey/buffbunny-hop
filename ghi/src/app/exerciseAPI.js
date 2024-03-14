@@ -1,12 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-
-const X_RAPID_API = 'https://api.third-party.com'
-
 export const exerciseAPI = createApi({
     reducerPath: "exerciseAPI",
     baseQuery: fetchBaseQuery({
-        baseUrl: X_RAPID_API,
+        baseUrl: import.meta.env.VITE_API_HOST,
         credentials: "include"
     }),
     endpoints: (builder) => ({
@@ -42,25 +39,13 @@ export const exerciseAPI = createApi({
             }
         }),
         getExerciseApiDetails: builder.query({
-            query: (name) => {
-                return {
-                    url: `/api/exercises_api/${name}`,
-                }
-            }
+            query: (name) => `/api/exercises_api/${name}`,
         }),
         getExerciseApiList: builder.query({
-            query: () => {
-                return {
-                    url: "/api/exercises_api"
-                }
-            }
+            query: () => "/api/exercises_api"
         }),
         getExerciseApiByTarget: builder.query({
-            query: (target) => {
-                return {
-                    url: `/api/exercises_api/target/${target}`
-                }
-            }
+            query: (target) => `/api/exercises_api/target/${target}`
         })
     })
 })
