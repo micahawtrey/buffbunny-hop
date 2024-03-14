@@ -1,66 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import ExplodeOnClick from './ExplodeOnClick';
+import '../styles.css'; // Import your custom styles
+import buffBunnyLogo from './BUFFBunny_Hop_Logo-nobg.png'; // Import the logo image
 
 const MainPage = () => {
-    const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
-    const [apiKey, setApiKey] = useState('');
-
-    useEffect(() => {
-        const fetchApiKey = async () => {
-            try {
-                const response = await fetch('/api/api-key');
-                const data = await response.json();
-                setApiKey(data.api_key);
-            } catch (error) {
-                console.error('Error Fetching API Key:', error);
-            }
-        };
-        fetchApiKey
-    }, []);
-
-    useEffect(() => {
-        if (apiKey) {
-            const fetchBackgroundImage = async () => {
-                const url = `https://api.pexels.com/v1/search?query=gym&per_page=1`;
-                try {
-                    const response = await fetch(url, {
-                        headers: {
-                            Authorization: apiKey
-                        }
-                    });
-                    const data = await response.json();
-                    if (data.photos.length > 0) {
-                        setBackgroundImageUrl(data.photos[0].src.original);
-                    }
-                }   catch (error) {
-                    console.error('Error fetching image from Pexels:', error);
-                }
-            };
-
-            fetchBackgroundImage();
-        }
-    }, [apiKey]);
-
     const containerStyle = {
-        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundImage: `url(${buffBunnyLogo})`, // Use the imported image as background
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100vh',
-        color: '#fff'
+        color: 'lightgreen',
+        textShadow: "3px 3px 3px black"
     };
 
+    const camoButtonStyle = {
+        background: 'url(https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F71mWIV3jo1L._AC_UF894%2C1000_QL80_.jpg&tbnid=Tsvtch_rDp6zzM&vet=12ahUKEwjggP-0yfSEAxU3K2IAHcSmAwkQMygGegUIARD_AQ..i&imgrefurl=https%3A%2F%2Fwww.amazon.com%2FWindham-Fabrics-0295842-Green-Fabric%2Fdp%2FB01B50CRWC&docid=hiOizd1kwso6QM&w=894&h=894&q=military%20camo&hl=en&ved=2ahUKEwjggP-0yfSEAxU3K2IAHcSmAwkQMygGegUIARD_AQ) repeat',
+        color: 'lightgreen',
+        padding: '10px 20px',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        textShadow: '3px 3px 3px black'
+    };
 
-     return (
-        <div className="container" style={containerStyle}>
-            <h1>Buffbunny Hop</h1>
-            <p>From Fluff To Buff</p>
-            <Link to="/login" className="btn btn-primary">
-                Login
-            </Link>
-            <Link to="/signup" className="btn btn-secondary">
-                Sign Up
-            </Link>
-        </div>
+    return (
+        <ExplodeOnClick>
+            <div className="container" style={containerStyle}>
+                <div className="content">
+                    <h1>Buffbunny Hop</h1>
+                    <h2>From Fluff To Buff</h2>
+                </div>
+                <div className="buttons-wrapper">
+                    <Link to="/login" className="btn btn-primary" style={camoButtonStyle}>
+                        Login
+                    </Link>
+                    <Link to="/signup" className="btn btn-secondary camo-button" style={camoButtonStyle}>
+                        Sign Up
+                    </Link>
+                </div>
+            </div>
+        </ExplodeOnClick>
     );
 };
 

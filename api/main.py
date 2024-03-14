@@ -8,6 +8,8 @@ from routers import workouts
 from routers import routines
 from routers import recent_workouts
 from routers import exercises_api
+from .api_keys import PexelApiKey
+
 
 app = FastAPI()
 app.include_router(authenticator.router)
@@ -28,6 +30,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/api/api-key")
+async def get_api_key():
+    api_key = PexelApiKey
+    return {"api_key": api_key}
+    
 
 @app.get("/api/launch-details")
 def launch_details():
