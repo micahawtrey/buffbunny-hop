@@ -80,12 +80,14 @@ function CreateWorkout (){
     }
 
     const handleSubmit = () => {
-        const data = {name, description}
-        const exerciseList = []
-        for (let exercise of Object.values(exercises)) {
-            exerciseList.push(exercise)
+        const data = {
+            name,
+            description,
+            exercises: []
         }
-        data[exercises] = exerciseList
+        for (let exercise of Object.values(exercises)) {
+            data["exercises"].push(exercise)
+        }
         workout(data)
     }
 
