@@ -1,6 +1,12 @@
 Jory Bennett
 
+03-18-2024
+
+Worked on and completed functionality for Routine.jsx. Had issues with gitlab, it decided to assign my commits to the reviewer.
+
 03-14-2024
+
+Completed Sign Up and Login jsx files with elements.
 
 Started working on Main Page Elements. Like the Pexel API to display background photos of workouts and gyms set to a carousel. Will also attempt to implement explode on click.
 

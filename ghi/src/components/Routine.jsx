@@ -1,38 +1,21 @@
 import React from 'react';
-import { useGetAllRoutinesQuery } from '../app/routineAPI';
 
-function Routine() {
-    const { data: routines, error, isLoading } = useGetAllRoutinesQuery();
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
+function Routine({ routine }) {
     return (
         <div className="m-4">
             <div className="col-12 shadow text-center bg-light">
-                <h1>Routines</h1>
+                <h1>Routine Details</h1>
             </div>
-            <div className="row">
+            <div className="row mt-4">
                 <div className="col-12">
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {routines.map((routine, index) => (
-                                <tr key={index} className={index % 2 === 0 ? 'bg-light' : 'bg-gray'}>
-                                    <td>{routine.name}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <div className="card">
+                        <div className="card-header">
+                            {routine.name}
+                        </div>
+                        <div className="card-body">
+                            <p>Description: {routine.description}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

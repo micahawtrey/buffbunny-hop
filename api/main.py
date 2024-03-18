@@ -29,10 +29,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/api-key")
-async def get_api_key():
-    api_key = PexelApiKey
-    return {"api_key": api_key}
 
 
 @app.get("/api/launch-details")
