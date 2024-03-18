@@ -122,11 +122,13 @@ function CreateWorkout (){
    return (
   <div style={{ paddingTop: '20px' }}>
     <div className="form-floating mb-3">
-      <input type="text" className="form-control" id="workoutName" placeholder="Workout Name" />
+      <input type="text" className="form-control" id="workoutName" placeholder="Workout Name" name="name"
+        onChange={(event) => handleChange(event)} value={name}/>
       <label htmlFor="workoutName">Workout Name</label>
     </div>
     <div className="form-floating mb-3">
-      <textarea className="form-control" id="workoutDescription" placeholder="Workout Description"></textarea>
+      <textarea className="form-control" id="workoutDescription" placeholder="Workout Description" name="description"
+       onChange={(event) => handleChange(event)} value={description}></textarea>
       <label htmlFor="workoutDescription">Workout Description</label>
     </div>
     <div className="d-flex flex-wrap" style={{ border: '1px solid #ddd', borderRadius: '10px', padding: '10px' }}>
@@ -150,7 +152,8 @@ function CreateWorkout (){
                     </select>
                 </div>
                 <div className="form-group w-50">
-                    <select className="form-select" aria-label="Select Exercise">
+                    <select className="form-select" aria-label="Select Exercise" name="name"
+                        onChange={(event) => setExerciseValues(event, exerciseKey)}>
                         <option defaultValue>Select Exercise</option>
                         {exercise.exercises.map(exercise => (
                             <option key={exercise.url} value={exercise.name}>{exercise.name}</option>
@@ -159,18 +162,28 @@ function CreateWorkout (){
                 </div>
                 <div className="ms-4 d-flex">
                 <div className="form-floating me-2">
-                    <input type="number" className="form-control form-control-sm" id="sets" placeholder="Sets" min="1" />
+                    <input type="number" className="form-control form-control-sm" id="sets" placeholder="Sets" min="1"
+                    name="set" value={exercises[exerciseKey]["set"]}
+                    onChange={(event) => setExerciseValues(event, exerciseKey) }/>
                     <label htmlFor="sets">Sets</label>
                 </div>
                 <div className="form-floating">
-                    <input type="number" className="form-control form-control-sm" id="reps" placeholder="Reps" min="1" />
+                    <input type="number" className="form-control form-control-sm" id="reps" placeholder="Reps" min="1"
+                    name="rep" value={exercises[exerciseKey]["rep"]}
+                    onChange={(event) => setExerciseValues(event, exerciseKey)} />
                     <label htmlFor="reps">Reps</label>
                 </div>
                 </div>
+                <button className='btn btn-danger'
+                    onClick={() => removeExercise(exerciseKey)}> Delete Exercise</button>
             </div>
             )
         })}
+        <button className="btn btn-primary"
+            onClick={() => addNewExercise()}>Add New Exercise</button>
     </div>
+    <button className='btn btn-success'
+        onClick={() => handleSubmit()}> Create Workout</button>
   </div>
 );
 
