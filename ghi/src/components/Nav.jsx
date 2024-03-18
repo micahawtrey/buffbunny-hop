@@ -50,7 +50,7 @@ function Nav() {
             </li>}
             {data &&
             <li className="nav-item">
-              <NavLink className="nav-link" to={`/routine/${account_id}`}>My Routine</NavLink>
+              <NavLink className="nav-link" to={`/routines/dashboard`}>My Routine</NavLink>
             </li>}
           </ul>
           {data &&
