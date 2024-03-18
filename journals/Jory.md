@@ -1,5 +1,21 @@
 Jory Bennett
 
+03-14-2024
+
+Started working on Main Page Elements. Like the Pexel API to display background photos of workouts and gyms set to a carousel. Will also attempt to implement explode on click.
+
+Did not end up getting Pexel API w/carousel to work. Did manage to get explode to click work with changing colors.
+
+03-13-2024
+
+Finished up with filtering exercises thanks to help from Micah.
+
+Worked on Main Page to get it set up with being able to navigate to login and sign up. Tried to make it harder than it needed to be. Got it solved and implemented.
+
+03-12-2024
+
+Worked on filtering exercises. That gave me quite a bit of trouble. I felt like I was dragging my face across the keyboard at one point.
+
 03-11-2024
 
 Mob programmed routineAPI.js. Took turns working on each element, screen sharing as we went. I worked on the getAllRoutines endpoint.
@@ -7,6 +23,8 @@ Mob programmed routineAPI.js. Took turns working on each element, screen sharing
 03-04-2024 - 03-08-2024
 
 Down with food poisoning. Attempted to work and help my group.
+
+On 03-07-2024 we mob programmed endpoints.
 
 03-01-2024
 

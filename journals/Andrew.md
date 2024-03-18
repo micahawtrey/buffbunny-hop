@@ -15,3 +15,9 @@ Mob coded routes
 
 March 13, 2024
 References to create exercise gone -- removed workout paramater from Account In and Account Out in api/models.py -- Update to Routine In model - Description str added -- Added Redux into Singup Form
+
+March 15, 2024
+Created front end RoutineCreation page.
+
+March 19, 2024
+Developed a front-end API integration to enhance the functionality of the User Dashboard page.

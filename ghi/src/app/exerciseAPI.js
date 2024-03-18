@@ -39,25 +39,13 @@ export const exerciseAPI = createApi({
             }
         }),
         getExerciseApiDetails: builder.query({
-            query: (name) => {
-                return {
-                    url: `/api/exercises_api/${name}`,
-                }
-            }
+            query: (name) => `/api/exercises_api/${name}`,
         }),
         getExerciseApiList: builder.query({
-            query: () => {
-                return {
-                    url: "/api/exercises_api"
-                }
-            }
+            query: () => "/api/exercises_api"
         }),
         getExerciseApiByTarget: builder.query({
-            query: (target) => {
-                return {
-                    url: `/api/exercises_api/target/${target}`
-                }
-            }
+            query: (target) => `/api/exercises_api/target/${target}`
         })
     })
 })
