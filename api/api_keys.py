@@ -1,4 +1,3 @@
 
-
+PEXELS_KEY = 'pBCjq6cj9kPO2MjAi0gDIWUqmbXXsrVJbdTNO5r2nI2nhDcuF8dBGBNB'
 RAPIDAPI_KEY = '167d1309bemsh3c4e0bf4058741ep1bdfcdjsnfbf270b55d2a'
-

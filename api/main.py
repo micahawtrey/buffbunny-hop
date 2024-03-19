@@ -8,7 +8,7 @@ from routers import workouts
 from routers import routines
 from routers import recent_workouts
 from routers import exercises_api
-
+from routers import photos_gym_api
 
 app = FastAPI()
 app.include_router(authenticator.router)
@@ -18,6 +18,7 @@ app.include_router(workouts.router, tags=["Workouts"])
 app.include_router(routines.router, tags=["Routines"])
 app.include_router(exercises_api.router, tags=["Exercise API"])
 app.include_router(recent_workouts.router, tags=["Recent Workouts"])
+app.include_router(photos_gym_api.router, tags=['Gym Photos API'])
 
 app.add_middleware(
     CORSMiddleware,
