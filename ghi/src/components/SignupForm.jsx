@@ -1,12 +1,17 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCreateAccountMutation } from '../app/accountAPI';
 import { useNavigate } from 'react-router-dom';
-import buffBunnyLogo from './BUFFBunny_Hop_Logo-nobg.png'; // Import the logo image
+import buffBunnyLogo from './BUFFBunny_Hop_Logo-nobg.png'; // Ensure this path is correct
 
 function SignupForm() {
-  const [createAccount, createAccountStatus] = useCreateAccountMutation();
+  const [createAccount, { isSuccess, isError, error }] = useCreateAccountMutation();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (isSuccess) navigate("/dashboard");
+    else if (isError) setErrorMessage(error.data?.message || "An error occurred");
+  }, [isSuccess, isError, error, navigate]);
 
   const [formData, setFormData] = useState({
     full_name: '',
@@ -16,75 +21,69 @@ function SignupForm() {
     password_confirmation: '',
   });
 
-  useEffect(() => {
-    if (createAccountStatus.isSuccess) navigate("/dashboard");
-    if (createAccountStatus.isError) {
-      setErrorMessage(createAccountStatus.error.data.detail);
-    }
-  }, [createAccountStatus, navigate]);
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (formData.password === formData.password_confirmation) {
-      createAccount(formData);
-    } else {
-      setErrorMessage("Passwords do not match.");
-    }
+    createAccount(formData);
   };
 
-  const handleFormChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const formContainerStyle = {
-    padding: '2rem',
-    maxWidth: '600px',
-    margin: '0 auto',
-    backgroundImage: `url(${buffBunnyLogo})`, // Set the logo image as background
+  const containerStyle = {
+    backgroundImage: `url(${buffBunnyLogo})`, // Use the imported image as background
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    height: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     color: 'black',
-    textShadow: "2px 2px 7px black"
+    textShadow: "2px 2px 7px black",
+  };
+
+  // Adjust the width of the form container here
+  const formContainerStyle = {
+    maxWidth: '500px', // Set a max-width for larger screens
+    width: '60%', // Use 100% of the container width on smaller screens
+    padding: '20px', // Add some padding around the form
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Optional: Add a slight background color to enhance readability
+    borderRadius: '15px', // Optional: Round the corners of the form container
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Optional: Add a subtle shadow for depth
   };
 
   return (
-    <div style={formContainerStyle} className="my-5 container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card shadow mx-auto">
-            <div className="card-body">
-              <h1 className="card-title text-center">Sign Up</h1>
-              {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}
-              <form onSubmit={handleSubmit} id="signup-form">
-                <div className="mb-3 form-floating">
-                  <input onChange={handleFormChange} value={formData.full_name} required type='text' name='full_name' id='full_name' className='form-control' />
-                  <label htmlFor="full_name">Name</label>
-                </div>
-                <div className="mb-3 form-floating">
-                  <input onChange={handleFormChange} value={formData.username} required type='text' name='username' id='username' className='form-control' />
-                  <label htmlFor="user_name">User Name</label>
-                </div>
-                <div className="mb-3 form-floating">
-                  <input onChange={handleFormChange} value={formData.email} required type='email' name='email' id='email' className='form-control' />
-                  <label htmlFor="email_address">Email Address</label>
-                </div>
-                <div className="mb-3 form-floating">
-                  <input onChange={handleFormChange} value={formData.password} required type='password' name='password' id='password' className='form-control' />
-                  <label htmlFor="password">Password</label>
-                </div>
-                <div className="mb-3 form-floating">
-                  <input onChange={handleFormChange} value={formData.password_confirmation} required type='password' name='password_confirmation' id='password_confirmation' className='form-control' />
-                  <label htmlFor="password_confirmation">Password Confirmation</label>
-                </div>
-                <button type="submit" className="btn btn-primary">Hop In</button>
-              </form>
-            </div>
+    <div style={containerStyle}>
+      <div style={formContainerStyle}>
+        <h1>Sign Up</h1>
+        <form onSubmit={handleSubmit}>
+          {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}
+          <div className="mb-3 form-floating">
+            <input type="text" name="full_name" className="form-control" id="full_name" placeholder="Full Name" required value={formData.full_name} onChange={handleFormChange} />
+            <label htmlFor="full_name">Full Name</label>
           </div>
-        </div>
+          <div className="mb-3 form-floating">
+            <input type="text" name="username" className="form-control" id="username" placeholder="User Name" required value={formData.username} onChange={handleFormChange} />
+            <label htmlFor="username">User Name</label>
+          </div>
+          <div className="mb-3 form-floating">
+            <input type="email" name="email" className="form-control" id="email" placeholder="Email Address" required value={formData.email} onChange={handleFormChange} />
+            <label htmlFor="email">Email Address</label>
+          </div>
+          <div className="mb-3 form-floating">
+            <input type="password" name="password" className="form-control" id="password" placeholder="Password" required value={formData.password} onChange={handleFormChange} />
+            <label htmlFor="password">Password</label>
+          </div>
+          <div className="mb-3 form-floating">
+            <input type="password" name="password_confirmation" className="form-control" id="password_confirmation" placeholder="Confirm Password" required value={formData.password_confirmation} onChange={handleFormChange} />
+            <label htmlFor="password_confirmation">Confirm Password</label>
+          </div>
+          <button type="submit" className="btn btn-primary">Sign Up</button>
+        </form>
       </div>
     </div>
   );
