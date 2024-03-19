@@ -41,6 +41,7 @@ class RoutineIn(BaseModel):
 
 class RoutineOut(RoutineIn):
     id: str
+    account_id: str
 
 #queries
 class AccountIn(BaseModel):
