@@ -58,6 +58,9 @@ function Nav() {
             <li>
               <NavLink className="nav-link" to={`/routines/dashboard`}>My Routine</NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to={"routines/create"}>Create Routine</NavLink>
+            </li>
           </ul>
           {data &&
           <button

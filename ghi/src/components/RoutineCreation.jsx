@@ -1,123 +1,131 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCreateRoutineMutation } from '../app/routineAPI';
 import { useGetAllWorkoutsQuery } from '../app/workoutAPI';
-import { useNavigate } from 'react-router-dom';
 
 function RoutineCreation() {
-const [createRoutine, createRoutineStatus] = useCreateRoutineMutation();
-const { data: workoutsData } = useGetAllWorkoutsQuery();
-const navigate = useNavigate();
-const [errorMessage, setErrorMessage] = useState("");
-
-const [formData, setFormData] = useState({
-    routineName: '',
-    routineDescription: '',
-    selectedWorkouts: [],
-    routineFrequency: '',
-    durationWeeks: '',
-    durationMonths: '',
-});
-
-useEffect(() => {
-    if (createRoutineStatus.isSuccess) navigate("/dashboard");
-    if (createRoutineStatus.isError) {
-    setErrorMessage(createRoutineStatus.error.data.detail);
-    }
-}, [createRoutineStatus, navigate]);
-
-const handleSubmit = (event) => {
-    event.preventDefault();
-    createRoutine({
-    name: formData.routineName,
-    description: formData.routineDescription,
-    workouts: formData.selectedWorkouts,
-    frequency: formData.routineFrequency,
-    durationWeeks: formData.durationWeeks,
-    durationMonths: formData.durationMonths,
+    const navigate = useNavigate();
+    const [createRoutine, { isSuccess, isError, error }] = useCreateRoutineMutation();
+    const { data: workouts, isLoading: isLoadingWorkouts, isError: isWorkoutsError } = useGetAllWorkoutsQuery();
+    const [formData, setFormData] = useState({
+        name: '',
+        description: '',
+        workouts: []
     });
-};
+    const [workoutNum, setWorkoutNum] = useState(1)
+    const [workoutList, setWorkoutList] = useState({
+        workout0: {
+            workoutId: "",
+            workoutKey: "workout0",
+            workoutNum: 0
+        }
+    })
+    const [errorMessage, setErrorMessage] = useState("");
 
-const handleFormChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    if (type === 'checkbox') {
-    setFormData(prevFormData => ({
-        ...prevFormData,
-        selectedWorkouts: checked
-        ? [...prevFormData.selectedWorkouts, value]
-        : prevFormData.selectedWorkouts.filter(workoutId => workoutId !== value),
-    }));
-    } else {
-    setFormData({
-        ...formData,
-        [name]: value,
-    });
+    const addNewWorkout = () => {
+        const workoutKey = `workout${workoutNum}`
+        setWorkoutList({
+            ...workoutList,
+            [workoutKey]: {
+                workoutId: "",
+                workoutKey: [workoutKey],
+                workoutNum: [workoutNum]
+            }
+        })
+        setWorkoutNum(workoutNum + 1)
     }
-};
 
-return (
-    <div className="my-5 container">
-    <div className="row">
-        <div className="col">
-        <div className="card shadow mx-5">
-            <div className="card-body">
-            <h1 className="card-title">Create New Routine</h1>
-            <form onSubmit={handleSubmit}>
-                {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}
-                <div className="mb-3 form-floating">
-                <input onChange={handleFormChange} value={formData.routineName} required type='text' name='routineName' id='routineName' className='form-control' />
-                <label htmlFor="routineName">Routine Name</label>
-                </div>
-                <div className="mb-3 form-floating">
-                <textarea onChange={handleFormChange} value={formData.routineDescription} name='routineDescription' id='routineDescription' className='form-control' />
-                <label htmlFor="routineDescription">Routine Description</label>
-                </div>
-                <div className="mb-3 form-floating">
-                <select onChange={handleFormChange} value={formData.routineFrequency} required name='routineFrequency' id='routineFrequency' className='form-control'>
-                    <option value="">Select Days per Week</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                </select>
-                <label htmlFor="routineFrequency">Days per Week:</label>
-                </div>
-                <div className="mb-3 form-floating">
-                <input type="number" className="form-control" id="durationWeeks" name="durationWeeks" placeholder="Duration in Weeks" value={formData.durationWeeks} onChange={handleFormChange} />
-                <label htmlFor="durationWeeks">Duration in Weeks</label>
-                </div>
-                <div className="mb-3 form-floating">
-                <input type="number" className="form-control" id="durationMonths" name="durationMonths" placeholder="Duration in Months" value={formData.durationMonths} onChange={handleFormChange} />
-                <label htmlFor="durationMonths">Duration in Months</label>
-                </div>
-                <div>
-                <h3>Select Workouts</h3>
-                {workoutsData && workoutsData.map((workout) => (
-                    <div key={workout.id} className="form-check">
-                    <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={workout.id}
-                        id={`workout-${workout.id}`}
-                        name="selectedWorkouts"
-                        onChange={handleFormChange}
-                    />
-                    <label className="form-check-label" htmlFor={`workout-${workout.id}`}>
-                        {workout.name}
-                    </label>
+    const removeWorkout = (workoutKey) => {
+        setWorkoutList(prevWorkouts => {
+            const newWorkouts = {...prevWorkouts}
+            delete newWorkouts[workoutKey]
+            return newWorkouts
+        })
+    }
+
+    useEffect(() => {
+        if (isSuccess) {
+            navigate("/dashboard");
+        } else if (isError && error && 'data' in error) {
+            setErrorMessage(`Error: ${error.data.detail}`);
+        }
+    }, [isSuccess, isError, error, navigate]);
+
+    const handleFormChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleWorkoutChange = (event, workoutKey) => {
+        const value = event.target.value
+        setWorkoutList(prevWorkouts => {
+            const newWorkouts = {...prevWorkouts}
+            newWorkouts[workoutKey]["workoutId"] = value
+            return newWorkouts
+        })
+    }
+
+    const handleSubmit = () => {
+        const body = {...formData}
+        console.log(body)
+        for (let workout of Object.values(workoutList)) {
+            const workoutObject = workouts.find((queriedWorkout) => queriedWorkout["id"] == workout["workoutId"])
+            body["workouts"].push(workoutObject)
+        }
+        console.log({body})
+        createRoutine(body);
+    };
+
+    if (isLoadingWorkouts) return <div>Loading workouts...</div>;
+    if (isWorkoutsError) return <div>Error loading workouts.</div>;
+
+    return (
+    <div className="">
+        <h1 className='text-center m-3'>Create a new Routine</h1>
+        <div className="form-floating mb-3">
+            <input type="text" className="form-control" id="workoutName" placeholder="Workout Name" name="name"
+                onChange={(event) => handleFormChange(event)} value={formData.name}/>
+            <label htmlFor="workoutName">Routine Name</label>
+        </div>
+        <div className="form-floating mb-3">
+            <textarea className="form-control" id="workoutDescription" placeholder="Workout Description" name="description"
+            onChange={(event) => handleFormChange(event)} value={formData.description}></textarea>
+            <label htmlFor="workoutDescription">Routine Description</label>
+        </div>
+        <div className="mb-3 border rounded">
+            {Object.values(workoutList).map(workout => {
+                const workoutKey = workout.workoutKey
+                return (
+                <div className="row m-3 border rounded shadow" key={workoutKey}>
+                    <h4 className='mt-3'>Day #{workout.workoutNum}</h4>
+                    <div className="d-flex flex-grow-1" >
+                        <div className="form-group me-3 mb-3">
+                            <select className="form-select" aria-label="Select Workout" name="workoutId"
+                                onChange={(event) => handleWorkoutChange(event, workoutKey)}>
+                                <option defaultValue>Select workout</option>
+                                {workouts.map(workout => (
+                                    <option key={workout.id} value={workout.id}>{workout.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <button className='btn btn-danger mb-3'
+                            onClick={() => removeWorkout(workoutKey)}>Delete Workout</button>
                     </div>
-                ))}
                 </div>
-                <button type="submit" className="btn btn-primary mt-3">Create Routine</button>
-            </form>
-            </div>
+                )
+            })}
+            <button className="btn btn-primary m-3"
+                onClick={() => addNewWorkout()}>Add New Workout</button>
         </div>
+        <div className='d-flex justify-content-center'>
+            <button className='btn btn-success'
+            onClick={() => handleSubmit()}> Create Routine</button>
         </div>
     </div>
-    </div>
-);
+    );
 }
 
 export default RoutineCreation;

@@ -19,5 +19,10 @@ References to create exercise gone -- removed workout paramater from Account In 
 March 15, 2024
 Created front end RoutineCreation page.
 
+<<<<<<< HEAD
+March 18, 2024
+Modified Routine Creation page for functionality and API connectivity.
+=======
 March 19, 2024
 Developed a front-end API integration to enhance the functionality of the User Dashboard page.
+>>>>>>> 5dbbe2ba4c1374233c71d17c75b2ccf35ceb1a95
