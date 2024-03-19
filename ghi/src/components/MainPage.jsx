@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ExplodeOnClick from './ExplodeOnClick';
-import '../styles.css'; // Import your custom styles
-import buffBunnyLogo from './BUFFBunny_Hop_Logo-nobg.png'; // Import the logo image
+import '../styles.css';
+import buffBunnyLogo from './BUFFBunny_Hop_Logo-nobg.png';
 
 const MainPage = () => {
     const containerStyle = {
-        backgroundImage: `url(${buffBunnyLogo})`, // Use the imported image as background
+        backgroundImage: `url(${buffBunnyLogo})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100vh',

@@ -32,7 +32,7 @@ function LoginForm() {
   };
 
   const containerStyle = {
-    backgroundImage: `url(${buffBunnyLogo})`, // Use the imported image as background
+    backgroundImage: `url(${buffBunnyLogo})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: '100vh',
@@ -43,14 +43,13 @@ function LoginForm() {
     textShadow: "2px 2px 7px black",
   };
 
-  // Adjust the width of the form container here
   const formContainerStyle = {
-    maxWidth: '500px', // Set a max-width for larger screens
-    width: '60%', // Use 100% of the container width on smaller screens
-    padding: '20px', // Add some padding around the form
-    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Optional: Add a slight background color to enhance readability
-    borderRadius: '15px', // Optional: Round the corners of the form container
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Optional: Add a subtle shadow for depth
+    maxWidth: '500px',
+    width: '60%',
+    padding: '20px',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: '15px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
   };
 
   return (

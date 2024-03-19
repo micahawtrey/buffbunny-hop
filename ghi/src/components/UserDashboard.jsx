@@ -1,8 +1,16 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useFilterRecentWorkoutsQuery } from '../app/recentWorkoutsAPI';
+import { useGetTokenQuery } from '../app/accountAPI';
+import { useNavigate } from 'react-router-dom';
 
 function UserDashboard() {
   const { data: workouts, error, isLoading } = useFilterRecentWorkoutsQuery();
+  const { data: token, isLoading: tokenIsLoading } = useGetTokenQuery()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!tokenIsLoading && !token) navigate("/login")
+  }, [token, tokenIsLoading, navigate])
 
   if (isLoading) return <div className="text-center">Loading...</div>;
   if (error) return <div className="text-center text-danger">Error fetching workouts: {error.message}</div>;

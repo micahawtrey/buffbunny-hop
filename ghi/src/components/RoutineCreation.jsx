@@ -6,7 +6,7 @@ import { useGetAllWorkoutsQuery } from '../app/workoutAPI';
 function RoutineCreation() {
     const navigate = useNavigate();
     const [createRoutine, { isSuccess, isError, error }] = useCreateRoutineMutation();
-    const { data: workouts, isLoading: isLoadingWorkouts, isError: isWorkoutsError } = useGetAllWorkoutsQuery();
+    const { data: workouts, isLoading: isLoadingWorkouts, isError: isWorkoutsError, error: workoutsError } = useGetAllWorkoutsQuery();
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -21,7 +21,6 @@ function RoutineCreation() {
         }
     })
     const [errorMessage, setErrorMessage] = useState("");
-
     const addNewWorkout = () => {
         const workoutKey = `workout${workoutNum}`
         setWorkoutList({
@@ -48,8 +47,10 @@ function RoutineCreation() {
             navigate("/dashboard");
         } else if (isError && error && 'data' in error) {
             setErrorMessage(`Error: ${error.data.detail}`);
+        } else if (isWorkoutsError && workoutsError.data.detail === "Invalid token") {
+            navigate("/login")
         }
-    }, [isSuccess, isError, error, navigate]);
+    }, [isSuccess, isError, error, isWorkoutsError, workoutsError, navigate]);
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
@@ -80,9 +81,8 @@ function RoutineCreation() {
     };
 
     if (isLoadingWorkouts) return <div>Loading workouts...</div>;
-    if (isWorkoutsError) return <div>Error loading workouts.</div>;
 
-    return (
+    if (!isWorkoutsError) return (
     <div className="">
         <h1 className='text-center m-3'>Create a new Routine</h1>
         <div className="form-floating mb-3">

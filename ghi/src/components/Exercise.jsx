@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetExerciseApiDetailsQuery } from '../app/exerciseAPI';
+import { useGetTokenQuery } from '../app/accountAPI';
+import { useNavigate } from 'react-router-dom';
 
 const Exercise = () => {
     const { exercise_name } = useParams()
     const { data, isLoading } = useGetExerciseApiDetailsQuery(exercise_name)
+    const { data: token, isLoading: tokenIsLoading} = useGetTokenQuery()
+    const navigate = useNavigate()
 
     if (isLoading) {
-        return <div>Loading Exercise...</div>
+        return <div className='m-3'>Loading Exercise...</div>
+    }
+
+    if (!tokenIsLoading && !token) {
+        navigate("/login")
     }
 
     const exerciseName = (data.name[0].toUpperCase() + data.name.slice(1))
