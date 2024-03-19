@@ -1,5 +1,9 @@
 Jory Bennett
 
+03-19-2024
+
+Worked on Unit Test for Creating an Account as well as a Unit Test for Duplicate Accounts.
+
 03-18-2024
 
 Worked on and completed functionality for Routine.jsx. Had issues with gitlab, it decided to assign my commits to the reviewer.
