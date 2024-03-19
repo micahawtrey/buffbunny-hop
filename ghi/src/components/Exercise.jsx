@@ -3,18 +3,18 @@ import { useParams } from 'react-router-dom';
 import { useGetExerciseApiDetailsQuery } from '../app/exerciseAPI';
 
 const Exercise = () => {
-    const { exercise_id } = useParams()
-    const { data, isLoading } = useGetExerciseApiDetailsQuery(exercise_id)
+    const { exercise_name } = useParams()
+    const { data, isLoading } = useGetExerciseApiDetailsQuery(exercise_name)
 
     if (isLoading) {
         return <div>Loading Exercise...</div>
     }
 
-    const exercise_name = (data.name[0].toUpperCase() + data.name.slice(1))
+    const exerciseName = (data.name[0].toUpperCase() + data.name.slice(1))
     return (
         <>
             <div className='col m-3 p-1 shadow rounded text-center'>
-                <h1>{exercise_name}</h1>
+                <h1>{exerciseName}</h1>
             </div>
             <div className='col m-3 shadow rounded text-center'>
                 <img src={data.gifUrl} alt="" />

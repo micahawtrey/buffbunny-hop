@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useGetAllRoutinesQuery } from '../app/routineAPI';
 import { useCreateRecentWorkoutMutation } from '../app/recentWorkoutsAPI';
 import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function Routines() {
     const { data: allRoutines, error, isLoading } = useGetAllRoutinesQuery();
@@ -67,9 +68,11 @@ function Routines() {
                                 </thead>
                                 <tbody>
                                 {exercises.map((exercise, index) => {
+                                    const link = exercise.name.replaceAll(" ", " ")
+                                    const name = exercise.name.slice(0, 1).toUpperCase() + exercise.name.slice(1)
                                     return (
                                         <tr key={exercise.id + String(index)}>
-                                            <td>{exercise.name}</td>
+                                            <td><NavLink to={`/exercises/${link}`}>{name}</NavLink></td>
                                             <td>{exercise.set}</td>
                                             <td>{exercise.rep}</td>
                                         </tr>

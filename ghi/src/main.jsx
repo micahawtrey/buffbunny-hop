@@ -28,7 +28,7 @@ const router = createBrowserRouter([
             {path: "login", element: <LoginForm />},
             {path: "signup", element: <SignupForm />},
             {path: "dashboard", element: <UserDashboard />},
-            {path: "exercises/:exercise_id", element: <Exercise />},
+            {path: "exercises/:exercise_name", element: <Exercise />},
             {path: "exercises/filter", element: <FilterExercises />},
             {path: "workouts/create", element: <CreateWorkout />},
             {path: "routines/", element: <Routine />},
