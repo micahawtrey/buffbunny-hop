@@ -26,3 +26,6 @@ Modified Routine Creation page for functionality and API connectivity.
 March 19, 2024
 Developed a front-end API integration to enhance the functionality of the User Dashboard page.
 >>>>>>> 5dbbe2ba4c1374233c71d17c75b2ccf35ceb1a95
+
+March 20, 2024
+Developed test for workouts.
