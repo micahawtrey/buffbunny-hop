@@ -29,6 +29,7 @@ class ExerciseFilter(BaseModel):
 
 class WorkoutIn(BaseModel):
     name: str
+    description: str
     exercises: List[WorkoutExercise]
 
 class WorkoutOut(WorkoutIn):

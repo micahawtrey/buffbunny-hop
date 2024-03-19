@@ -11,7 +11,7 @@ export const recentWorkoutsAPI = createApi({
             query: (body) => {
                 return {
                     url: "/api/recent_workouts",
-                    method: "DELETE",
+                    method: "POST",
                     body
                 }
             }

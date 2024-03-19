@@ -13,7 +13,7 @@ from models import RoutineOut, RoutineIn, Error, Deleted
 
 router = APIRouter()
 
-@router.get("/api/routines/", response_model=Union[List[RoutineOut], Error])
+@router.get("/api/routines", response_model=Union[List[RoutineOut], Error])
 def get_all_routines(
     account_id: dict = Depends(authenticator.get_current_account_data),
     repo: RoutineQueries = Depends()
