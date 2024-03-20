@@ -12,12 +12,12 @@ function RoutineCreation() {
         description: '',
         workouts: []
     });
-    const [workoutNum, setWorkoutNum] = useState(1)
+    const [workoutNum, setWorkoutNum] = useState(2)
     const [workoutList, setWorkoutList] = useState({
-        workout0: {
+        workout1: {
             workoutId: "",
-            workoutKey: "workout0",
-            workoutNum: 0
+            workoutKey: "workout1",
+            workoutNum: 1
         }
     })
     const [errorMessage, setErrorMessage] = useState("");
