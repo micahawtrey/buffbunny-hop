@@ -4,7 +4,6 @@ from main import app
 client = TestClient(app=app)
 
 
-
 def test_create_account():
     account_in = {
         "full_name": "test_name",
@@ -14,7 +13,6 @@ def test_create_account():
     }
 
     response = client.post("/api/accounts", json=account_in)
-
 
     if response.status_code == 200:
         assert "access_token" in response.json()

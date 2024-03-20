@@ -7,8 +7,10 @@ from main import app
 
 client = TestClient(app=app)
 
+
 def fake_get_current_account_data():
     return {"id": "FAKE_ACCOUNT_ID"}
+
 
 class FakeWorkoutQueries:
     def create_workout(self, workout_in, account_id):
@@ -17,9 +19,11 @@ class FakeWorkoutQueries:
         workout["id"] = "FAKE_ID"
         return workout
 
+
 def test_create_workout():
     app.dependency_overrides[WorkoutQueries] = FakeWorkoutQueries
-    app.dependency_overrides[authenticator.get_current_account_data] = fake_get_current_account_data
+    app.dependency_overrides[authenticator.get_current_account_data] = (
+        fake_get_current_account_data)
 
     workout_in = {
         "name": "Workout A",

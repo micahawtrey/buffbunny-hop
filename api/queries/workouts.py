@@ -37,17 +37,26 @@ class WorkoutQueries(Queries):
         workout["id"] = str(workout["_id"])
         return WorkoutOut(**workout)
 
-    def update_workout(self, workout_id: str, workout_in: WorkoutIn, account_id: str):
+    def update_workout(
+            self,
+            workout_id: str,
+            workout_in: WorkoutIn,
+            account_id: str
+            ):
         try:
             query = {
-            '_id': ObjectId(workout_id),
-            'account_id': account_id
-            }
-            if self.collection.find_one({"_id": ObjectId(workout_id)}) is None:
+                '_id': ObjectId(workout_id),
+                'account_id': account_id
+                }
+            if self.collection.find_one(
+                    {"_id": ObjectId(workout_id)}
+                    ) is None:
                 return {"message": "Invalid workout ID"}
             workout = workout_in.dict()
             self.collection.update_one(query, {"$set": workout})
-            updated_workout = self.collection.find_one({"_id": ObjectId(workout_id)})
+            updated_workout = self.collection.find_one(
+                {"_id": ObjectId(workout_id)}
+                )
             updated_workout["id"] = str(updated_workout["_id"])
             return WorkoutOut(**updated_workout)
         except Exception as e:
@@ -55,12 +64,23 @@ class WorkoutQueries(Queries):
 
     def delete_workout(self, workout_id: str, account_id: str):
         try:
-            result = self.collection.delete_one({"_id": ObjectId(workout_id), "account_id": account_id})
+            result = self.collection.delete_one(
+                {"_id": ObjectId(workout_id), "account_id": account_id}
+                )
             if result.deleted_count > 0:
                 return {"deleted": True}
             else:
-                return {"deleted": False, "message": "No such workout exists for this account"}
+                return {
+                    "deleted": False,
+                    "message": "No such workout exists for this account"
+                }
         except InvalidId:
-            return {"deleted": False, "message": "Invalid workout ID"}
+            return {
+                "deleted": False,
+                "message": "Invalid workout ID"
+                }
         except Exception as e:
-            return {"deleted": False, "message": f"Error deleting workout: {str(e)}"}
+            return {
+                "deleted": False,
+                "message": f"Error deleting workout: {str(e)}"
+                }

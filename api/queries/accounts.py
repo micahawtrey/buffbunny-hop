@@ -2,8 +2,10 @@ from bson.objectid import ObjectId
 from models import AccountIn, Account
 from .queries import Queries
 
+
 class DuplicateAccountError(ValueError):
     pass
+
 
 class AccountQueries(Queries):
     DB_NAME = "buffbunny_hop"
@@ -18,7 +20,9 @@ class AccountQueries(Queries):
 
     def create(self, info: AccountIn, hashed_password: str):
         if self.get(info.username) is not None:
-            raise DuplicateAccountError(f"Account with username {info.username} already exists.")
+            raise DuplicateAccountError(
+                f"Account with username {info.username} already exists."
+                )
 
         account = info.dict()
         account["hashed_password"] = hashed_password

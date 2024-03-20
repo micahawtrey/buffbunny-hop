@@ -1,9 +1,9 @@
-from fastapi import APIRouter,Depends, HTTPException
+from fastapi import APIRouter, Depends
 from queries.photos_gym_api import PhotosGymApiQueries
-from typing import List
 
 router = APIRouter()
 queries = PhotosGymApiQueries()
+
 
 @router.get('/api/photos_gym_api')
 async def list_photos_gym_api(queries: PhotosGymApiQueries = Depends()):

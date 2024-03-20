@@ -4,6 +4,7 @@ from jwtdown_fastapi.authentication import Authenticator
 from queries.accounts import AccountQueries
 from models import AccountOut, AccountIn, Account
 
+
 class MyAuthenticator(Authenticator):
     async def get_account_data(
         self,
@@ -30,5 +31,6 @@ class MyAuthenticator(Authenticator):
         # Return the username and the data for the cookie.
         # You must return TWO values from this method.
         return account.username, AccountOut(**account.dict())
+
 
 authenticator = MyAuthenticator(os.environ["SIGNING_KEY"])

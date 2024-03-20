@@ -12,6 +12,7 @@ from models import ExerciseOut, ExerciseIn, Error, Deleted
 
 router = APIRouter()
 
+
 @router.get('/api/exercises', response_model=Union[List[ExerciseOut], Error])
 def filter_exercises(
     name: str = None,
@@ -28,7 +29,10 @@ def filter_exercises(
         )
     return filtered_exercises
 
-@router.get("/api/exercises/{exercise_id}", response_model=Union[ExerciseOut, Error])
+
+@router.get(
+    "/api/exercises/{exercise_id}",
+    response_model=Union[ExerciseOut, Error])
 def get_one_exercise(
     exercise_id: str,
     account_id: dict = Depends(authenticator.get_current_account_data),
@@ -48,6 +52,7 @@ def get_one_exercise(
             )
     return exercise
 
+
 @router.post("/api/exercises", response_model=ExerciseOut)
 def create_exercise(
     exercise_in: ExerciseIn,
@@ -55,7 +60,9 @@ def create_exercise(
     repo: ExerciseQueries = Depends()
 ):
     try:
-        new_exercise = repo.create_exercise(exercise_in, account_id=account_id["id"])
+        new_exercise = repo.create_exercise(
+            exercise_in,
+            account_id=account_id["id"])
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -63,7 +70,10 @@ def create_exercise(
             )
     return new_exercise
 
-@router.put("/api/exercises/{exercise_id}", response_model=Union[ExerciseOut, Error])
+
+@router.put(
+    "/api/exercises/{exercise_id}",
+    response_model=Union[ExerciseOut, Error])
 def update_exercise(
     exercise_id: str,
     exercise_in: ExerciseIn,
@@ -71,13 +81,17 @@ def update_exercise(
     repo: ExerciseQueries = Depends()
 ):
     try:
-        exercise = repo.update_exercise(exercise_id=exercise_id, account_id=account_id['id'], exercise_in=exercise_in)
+        exercise = repo.update_exercise(
+            exercise_id=exercise_id,
+            account_id=account_id['id'],
+            exercise_in=exercise_in)
     except ValueError as e:
         raise HTTPException(
             status_code=404,
             detail="Exercise not found" + str(e)
             )
     return exercise
+
 
 @router.delete("/api/exercises/{exercise_id}", response_model=Deleted)
 def delete_exercise(
@@ -86,7 +100,9 @@ def delete_exercise(
     repo: ExerciseQueries = Depends()
 ):
     try:
-        deletion = repo.delete_exercise(exercise_id=exercise_id, account_id=account_id["id"])
+        deletion = repo.delete_exercise(
+            exercise_id=exercise_id,
+            account_id=account_id["id"])
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

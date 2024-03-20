@@ -2,9 +2,7 @@ from fastapi import (
     Depends,
     HTTPException,
     status,
-    Response,
     APIRouter,
-    Request,
 )
 from authenticator import authenticator
 from typing import List, Union
@@ -12,6 +10,7 @@ from queries.routines import RoutineQueries
 from models import RoutineOut, RoutineIn, Error, Deleted
 
 router = APIRouter()
+
 
 @router.get("/api/routines", response_model=Union[List[RoutineOut], Error])
 def get_all_routines(
@@ -27,7 +26,10 @@ def get_all_routines(
             )
     return routines_list
 
-@router.get("/api/routines/{routine_id}", response_model=Union[RoutineOut, Error])
+
+@router.get(
+    "/api/routines/{routine_id}",
+    response_model=Union[RoutineOut, Error])
 def get_routine(
     routine_id,
     account_data: dict = Depends(authenticator.get_current_account_data),
@@ -40,6 +42,7 @@ def get_routine(
             detail="Routine not found"
         )
     return routine
+
 
 @router.post("/api/routines", response_model=Union[RoutineOut, Error])
 def create_routine(
@@ -55,7 +58,10 @@ def create_routine(
             )
     return routine
 
-@router.put("/api/routines/{routine_id}", response_model=Union[RoutineOut, Error])
+
+@router.put(
+    "/api/routines/{routine_id}",
+    response_model=Union[RoutineOut, Error])
 def update_routine(
     routine_id: str,
     routine_in: RoutineIn,
@@ -63,13 +69,17 @@ def update_routine(
     repo: RoutineQueries = Depends()
 ):
     try:
-        routine = repo.update_routine(routine_id=routine_id, account_id=account_id['id'], routine_in=routine_in)
+        routine = repo.update_routine(
+            routine_id=routine_id,
+            account_id=account_id['id'],
+            routine_in=routine_in)
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Routine not found" + str(e)
             )
     return routine
+
 
 @router.delete("/api/routines/{routine_id}", response_model=Deleted)
 def delete_routine(
@@ -78,7 +88,9 @@ def delete_routine(
     repo: RoutineQueries = Depends()
 ):
     try:
-        deletion = repo.delete_routine(routine_id=routine_id, account_id=account_id["id"])
+        deletion = repo.delete_routine(
+            routine_id=routine_id,
+            account_id=account_id["id"])
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

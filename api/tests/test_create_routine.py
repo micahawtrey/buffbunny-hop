@@ -5,8 +5,10 @@ from authenticator import authenticator
 
 client = TestClient(app=app)
 
+
 def fake_get_current_account_data():
     return {"id": "FAKE_ACCOUNT_ID"}
+
 
 class FakeRoutineQueries:
     def create_routine(self, routine_in, account_id):
@@ -15,13 +17,14 @@ class FakeRoutineQueries:
         routine["id"] = "FAKE_ID"
         return routine
 
+
 def test_create_routine():
-    # Arrange
+
     app.dependency_overrides[RoutineQueries] = FakeRoutineQueries
     app.dependency_overrides[authenticator.get_current_account_data] = (
         fake_get_current_account_data
     )
-    # Act
+
     routine_in = {
         "name": "1",
         "description": "1",
@@ -30,10 +33,10 @@ def test_create_routine():
                 "name": "1",
                 "exercises": [
                     {
-                    "name": "1",
-                    "muscle_group": "1",
-                    "set": "1",
-                    "rep": "1"
+                        "name": "1",
+                        "muscle_group": "1",
+                        "set": "1",
+                        "rep": "1"
                     }
                 ],
                 "id": "1"
@@ -41,7 +44,7 @@ def test_create_routine():
         ]
     }
     res = client.post("/api/routines", json=routine_in)
-    #Assert
+
     assert res.status_code == 200
     assert res.json() == {
             "name": "1",
@@ -51,10 +54,10 @@ def test_create_routine():
                     "name": "1",
                     "exercises": [
                         {
-                        "name": "1",
-                        "muscle_group": "1",
-                        "set": "1",
-                        "rep": "1"
+                            "name": "1",
+                            "muscle_group": "1",
+                            "set": "1",
+                            "rep": "1"
                         }
                     ],
                     "id": "1"

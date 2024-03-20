@@ -13,7 +13,9 @@ class ExerciseQueries(Queries):
         try:
             exercises_list = []
             if name is not None and muscle_group is not None:
-                for exercise in self.collection.find({"name": name, "muscle_group": muscle_group}):
+                for exercise in self.collection.find(
+                        {"name": name, "muscle_group": muscle_group}
+                        ):
                     exercise["id"] = str(exercise["_id"])
                     exercises_list.append(exercise)
             elif name is not None:
@@ -21,7 +23,9 @@ class ExerciseQueries(Queries):
                     exercise["id"] = str(exercise["_id"])
                     exercises_list.append(exercise)
             elif muscle_group is not None:
-                for exercise in self.collection.find({"muscle_group": muscle_group}):
+                for exercise in self.collection.find(
+                        {"muscle_group": muscle_group}
+                        ):
                     exercise["id"] = str(exercise["_id"])
                     exercises_list.append(exercise)
             return exercises_list
@@ -38,8 +42,7 @@ class ExerciseQueries(Queries):
         except InvalidId:
             return {"message": "Invalid exercise ID"}
         except Exception as e:
-            return{"message": "Unable to get exercise" + str(e)}
-
+            return {"message": "Unable to get exercise" + str(e)}
 
     def create_exercise(self, exercise_in: ExerciseIn, account_id: str):
         try:
@@ -54,20 +57,32 @@ class ExerciseQueries(Queries):
                 )
         return ExerciseOut(**exercise)
 
-    def update_exercise(self, exercise_id: str, account_id: str, exercise_in: ExerciseIn):
+    def update_exercise(
+            self,
+            exercise_id: str,
+            account_id: str,
+            exercise_in: ExerciseIn
+            ):
         try:
             query = {
                 '_id': ObjectId(exercise_id),
                 'account_id': account_id
             }
-            if self.collection.find_one({"_id": ObjectId(exercise_id)}) is None:
+            if self.collection.find_one(
+                    {"_id": ObjectId(exercise_id)}
+                    ) is None:
                 return {"message": "Invalid exercise ID"}
             if self.collection.find_one(query) is None:
-                return {"message": "This exercise is not associated with the logged in user"}
+                return {
+                    "message":
+                    "This exercise is not associated with the logged in user"
+                    }
             changes = exercise_in.dict()
             res = self.collection.update_one(query, {'$set': changes})
             if res.matched_count >= 1:
-                updated_workout = self.collection.find_one({"_id": ObjectId(exercise_id)})
+                updated_workout = self.collection.find_one(
+                    {"_id": ObjectId(exercise_id)}
+                    )
                 updated_workout["id"] = str(updated_workout["_id"])
                 return updated_workout
             else:
@@ -77,12 +92,20 @@ class ExerciseQueries(Queries):
 
     def delete_exercise(self, exercise_id: str, account_id: str):
         try:
-            result = self.collection.delete_one({"_id": ObjectId(exercise_id), "account_id": account_id})
+            result = self.collection.delete_one(
+                {"_id": ObjectId(exercise_id), "account_id": account_id}
+                )
             if result.deleted_count > 0:
                 return {"deleted": True}
             else:
-                return {"deleted": False, "message": "No such exercise exists for this account"}
+                return {
+                    "deleted": False,
+                    "message": "No such exercise exists for this account"
+                    }
         except InvalidId:
             return {"deleted": False, "message": "Invalid exercise ID"}
         except Exception as e:
-            return {"deleted": False, "message": f"Error deleting exercise: {str(e)}"}
+            return {
+                "deleted": False,
+                "message": f"Error deleting exercise: {str(e)}"
+                }

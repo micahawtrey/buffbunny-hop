@@ -1,7 +1,9 @@
 import os
 from pymongo import MongoClient
 
+
 client = MongoClient(os.environ.get("DATABASE_URL"))
+
 
 class Queries:
     @property

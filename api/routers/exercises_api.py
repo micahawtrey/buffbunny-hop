@@ -1,10 +1,11 @@
-from fastapi import APIRouter,Depends, HTTPException
+from fastapi import APIRouter, Depends
 from models import ExerciseApiOut, ExerciseApiList
 from queries.exercises_api import ExerciseApiQueries
 from typing import List
 
 router = APIRouter()
 queries = ExerciseApiQueries()
+
 
 @router.get('/api/exercises_api', response_model=ExerciseApiList)
 async def list_exercises_api(queries: ExerciseApiQueries = Depends()):
@@ -33,7 +34,9 @@ def details_exercise_api(
     return queries.get_exercise_details_api(name=name)
 
 
-@router.get('/api/exercises_api/target/{target}', response_model=List[ExerciseApiOut])
+@router.get(
+    '/api/exercises_api/target/{target}',
+    response_model=List[ExerciseApiOut])
 def target_exercise_api(
     target: str,
     queries: ExerciseApiQueries = Depends()

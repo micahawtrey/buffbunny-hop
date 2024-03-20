@@ -31,7 +31,6 @@ app.add_middleware(
 )
 
 
-
 @app.get("/api/launch-details")
 def launch_details():
     return {

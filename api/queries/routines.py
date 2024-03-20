@@ -8,7 +8,6 @@ class RoutineQueries(Queries):
     DB_NAME = "buffbunny_hop"
     COLLECTION = "routines"
 
-
     def get_all_routines(self):
         try:
             routines_list = []
@@ -38,13 +37,20 @@ class RoutineQueries(Queries):
         routine["id"] = str(routine["_id"])
         return RoutineOut(**routine)
 
-    def update_routine(self, routine_id: str, account_id: str, routine_in: RoutineIn):
+    def update_routine(
+            self,
+            routine_id: str,
+            account_id: str,
+            routine_in: RoutineIn
+            ):
         try:
             query = {
                 '_id': ObjectId(routine_id),
                 'account_id': account_id
             }
-            if self.collection.find_one({"_id": ObjectId(routine_id)}) is None:
+            if self.collection.find_one(
+                    {"_id": ObjectId(routine_id)}
+                    ) is None:
                 return {"message": "Invalid routine ID"}
             changes = routine_in.dict()
             res = self.collection.update_one(query, {'$set': changes})
@@ -56,16 +62,26 @@ class RoutineQueries(Queries):
                 return {"message": "No matching routine found to update"}
 
         except Exception as e:
-            return {"message": "Unable to update routine, " + str(e)}
+            return {
+                "message": "Unable to update routine, " + str(e)
+                }
 
     def delete_routine(self, routine_id: str, account_id: str):
         try:
-            result = self.collection.delete_one({"_id": ObjectId(routine_id), "account_id": account_id})
+            result = self.collection.delete_one(
+                {"_id": ObjectId(routine_id), "account_id": account_id}
+                )
             if result.deleted_count > 0:
                 return {"deleted": True}
             else:
-                return {"deleted": False, "message": "No such routine exists for this account"}
+                return {
+                    "deleted": False,
+                    "message": "No such routine exists for this account"
+                    }
         except InvalidId:
             return {"deleted": False, "message": "Invalid routine ID"}
         except Exception as e:
-            return {"deleted": False, "message": f"Error deleting routine: {str(e)}"}
+            return {
+                "deleted": False,
+                "message": f"Error deleting routine: {str(e)}"
+                }
