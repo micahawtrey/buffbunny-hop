@@ -4,26 +4,38 @@ import { useFilterRecentWorkoutsQuery } from '../app/recentWorkoutsAPI';
 function UserDashboard() {
   const { data: workouts, error, isLoading } = useFilterRecentWorkoutsQuery();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching workouts: {error.message}</div>;
+  if (isLoading) return <div className="text-center">Loading...</div>;
+  if (error) return <div className="text-center text-danger">Error fetching workouts: {error.message}</div>;
+
+  const formatDateAndTime = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+    return `${formattedDate} at ${formattedTime}`;
+  };
 
   return (
-    <div className="m-4">
-      <div className="border shadow mb-4">
-        <div className="text-center">
-          <h2>Recent Workouts</h2>
+    <div className="mt-3"> 
+      <div className="d-flex justify-content-center">
+        <div className="workouts border rounded shadow p-3" style={{ maxWidth: '600px', width: '100%' }}>
+          <h2 className="text-center">Recent Workouts</h2>
           <table className="table">
             <thead>
               <tr>
-                <th className="text-left">Workout</th>
-                <th className="text-end px-4">Date</th>
+                <th>Workout</th>
+                <th className="text-right">Date & Time</th>
               </tr>
             </thead>
             <tbody>
               {workouts?.map(workout => (
                 <tr key={workout.id}>
-                  <td className="text-left">{workout.name}</td>
-                  <td className="text-end px-4">{workout.created_on}</td>
+                  <td>{workout.name}</td>
+                  <td className="text-right">{formatDateAndTime(workout.created_on)}</td>
                 </tr>
               ))}
             </tbody>

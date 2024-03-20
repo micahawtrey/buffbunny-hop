@@ -29,3 +29,6 @@ Developed a front-end API integration to enhance the functionality of the User D
 
 March 20, 2024
 Developed test for workouts.
+
+March 21, 2024
+Added front end functionality and formatting to the user dashboard in the form of date/time configuration and rounded box corners.
