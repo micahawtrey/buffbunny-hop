@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLoginMutation } from '../app/accountAPI';
 import { useNavigate } from 'react-router-dom';
 import buffBunnyLogo from './BUFFBunny_Hop_Logo-nobg.png'; // Ensure this path is correct

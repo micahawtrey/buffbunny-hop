@@ -1,16 +1,7 @@
-import { useEffect } from 'react';
 import { useFilterRecentWorkoutsQuery } from '../app/recentWorkoutsAPI';
-import { useGetTokenQuery } from '../app/accountAPI';
-import { useNavigate } from 'react-router-dom';
 
 function UserDashboard() {
   const { data: workouts, error, isLoading } = useFilterRecentWorkoutsQuery();
-  const { data: token, isLoading: tokenIsLoading } = useGetTokenQuery()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!tokenIsLoading && !token) navigate("/login")
-  }, [token, tokenIsLoading, navigate])
 
   if (isLoading) return <div className="text-center">Loading...</div>;
   if (error) return <div className="text-center text-danger">Error fetching workouts: {error.message}</div>;
@@ -28,7 +19,7 @@ function UserDashboard() {
   };
 
   return (
-    <div className="mt-3"> 
+    <div className="mt-3">
       <div className="d-flex justify-content-center">
         <div className="workouts border rounded shadow p-3" style={{ maxWidth: '600px', width: '100%' }}>
           <h2 className="text-center">Recent Workouts</h2>

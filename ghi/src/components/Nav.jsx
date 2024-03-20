@@ -20,10 +20,7 @@ function Nav() {
       </nav>
     )
   }
-  let account_id = ""
-  if (!isLoading && data) {
-    account_id = data.account.id
-  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-info">
       <div className="container-fluid">
@@ -52,12 +49,14 @@ function Nav() {
             <li className="nav-item">
               <NavLink className="nav-link" to={"/routines"}>Routines</NavLink>
             </li>}
+            {data &&
             <li className="nav-item">
               <NavLink className="nav-link" to={"/workouts/create"}>Create Workout </NavLink>
-            </li>
+            </li>}
+            {data &&
             <li className="nav-item">
               <NavLink className="nav-link" to={"routines/create"}>Create Routine</NavLink>
-            </li>
+            </li>}
           </ul>
           {data &&
           <button

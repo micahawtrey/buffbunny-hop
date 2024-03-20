@@ -2,11 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCreateWorkoutMutation } from '../app/workoutAPI';
 import { useGetExerciseApiListQuery } from '../app/exerciseAPI';
-import { useGetTokenQuery } from '../app/accountAPI';
 
 function CreateWorkout (){
     const { data: exerciseList, isLoading } = useGetExerciseApiListQuery()
-    const { data: token, isLoading: tokenIsLoading} = useGetTokenQuery()
     const targets = [
         "abductors",
         "abs",
@@ -113,16 +111,6 @@ function CreateWorkout (){
         } else if (name === "description") {
             setDescription(value)
         }
-    }
-
-    if (isLoading || tokenIsLoading) {
-        return (
-            <div>Loading...</div>
-        )
-    }
-
-    if (!tokenIsLoading && !token) {
-        navigate("/login")
     }
 
     return (

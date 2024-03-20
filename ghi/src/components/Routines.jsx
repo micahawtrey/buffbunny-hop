@@ -3,14 +3,12 @@ import { useGetAllRoutinesQuery } from '../app/routineAPI';
 import { useCreateRecentWorkoutMutation } from '../app/recentWorkoutsAPI';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import { useGetTokenQuery } from '../app/accountAPI';
 
 function Routines() {
     const { data: allRoutines, error, isLoading } = useGetAllRoutinesQuery();
     const [selectedRoutine, setSelectedRoutine] = useState({})
     const [createRecentWorkout, createRecentWorkoutStatus] = useCreateRecentWorkoutMutation()
     const navigate = useNavigate()
-    const { data: token, isLoading: tokenIsLoading} = useGetTokenQuery()
     const handleSelectRoutine = (event) => {
         setSelectedRoutine(allRoutines.find((routine) => routine["id"] == event.target.value))
     }
@@ -21,8 +19,7 @@ function Routines() {
 
     useEffect(() => {
         if (createRecentWorkoutStatus.isSuccess) navigate("/dashboard")
-        if (!tokenIsLoading && !token) navigate("/login")
-    }, [createRecentWorkoutStatus, token, tokenIsLoading, navigate])
+    }, [createRecentWorkoutStatus, navigate])
 
     if (isLoading) {
         return <div>Loading...</div>;

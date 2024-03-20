@@ -6,7 +6,7 @@ import { useGetAllWorkoutsQuery } from '../app/workoutAPI';
 function RoutineCreation() {
     const navigate = useNavigate();
     const [createRoutine, { isSuccess, isError, error }] = useCreateRoutineMutation();
-    const { data: workouts, isLoading: isLoadingWorkouts, isError: isWorkoutsError, error: workoutsError } = useGetAllWorkoutsQuery();
+    const { data: workouts, isLoading: isLoadingWorkouts, isError: isWorkoutsError } = useGetAllWorkoutsQuery();
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -47,10 +47,8 @@ function RoutineCreation() {
             navigate("/dashboard");
         } else if (isError && error && 'data' in error) {
             setErrorMessage(`Error: ${error.data.detail}`);
-        } else if (isWorkoutsError && workoutsError.data.detail === "Invalid token") {
-            navigate("/login")
         }
-    }, [isSuccess, isError, error, isWorkoutsError, workoutsError, navigate]);
+    }, [isSuccess, isError, error, navigate]);
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
