@@ -1,5 +1,11 @@
+import os
 import requests
-from api_keys import RAPIDAPI_KEY
+from dotenv import load_dotenv
+
+# Load Environment Variables From The Root Level File
+load_dotenv()
+
+RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 
 
 class ExerciseApiQueries:

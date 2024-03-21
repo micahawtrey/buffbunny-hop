@@ -1,6 +1,11 @@
+import os
 import requests
-from api_keys import PEXELS_KEY
+from dotenv import load_dotenv
 
+# Load Environment Variables From The Root Level File
+load_dotenv()
+
+PEXELS_KEY = os.getenv("PEXELS_KEY")
 
 class PhotosGymApiQueries:
     def get_all_photos_gym_api(self):

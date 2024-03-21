@@ -1,5 +1,9 @@
 Jory Bennett
 
+03-21-2024
+
+Added API Keys to the .env file so they are hidden. The Pexels API Key and the Rapid API Key.
+
 03-19-2024
 
 Worked on Unit Test for Creating an Account as well as a Unit Test for Duplicate Accounts.
