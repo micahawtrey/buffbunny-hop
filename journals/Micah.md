@@ -1,3 +1,29 @@
+## March 20, 2024
+
+Today, I worked on:
+
+* Making the pipeline pass
+* Fixing the frontend authentication 
+
+Today, I learned that I hate flake8 and think that it makes
+my code much harder to read. It does, however, catch silly
+mistakes that I've made, which is good.
+
+## March 19, 2024
+
+Today, I worked on:
+
+* Setting up frontend authentication to stop users from
+accessing pages that they shouldn't be able to reach.
+* I made the Routine Display Page.
+
+Today, I realized that we were short on time and I was
+having trouble teaching well enough to get us finished in
+time. I decided to just do the next page mob programming 
+with me driving, and I fnished it up so we aren't pushing
+time any more. I will use this experience to be vigilant about
+not pushing time limits.
+
 ## March 12, 2024
 
 Today, I worked on:
