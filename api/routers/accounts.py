@@ -17,8 +17,7 @@ from models import (
     AccountToken,
     HttpError,
     AccountIn,
-    AccountOut,
-    DeleteStatus
+    AccountOut
     )
 
 router = APIRouter()
