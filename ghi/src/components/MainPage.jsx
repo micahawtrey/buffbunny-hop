@@ -3,7 +3,7 @@ import ExplodeOnClick from './ExplodeOnClick';
 import '../styles.css';
 import buffBunnyLogo from './BUFFBunny_Hop_Logo-nobg.png';
 
-const MainPage = () => {
+const Main = () => {
     const containerStyle = {
         backgroundImage: `url(${buffBunnyLogo})`,
         backgroundSize: 'cover',
@@ -43,4 +43,4 @@ const MainPage = () => {
     );
 };
 
-export default MainPage;
+export default Main;
