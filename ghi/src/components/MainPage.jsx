@@ -9,32 +9,39 @@ const Main = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100vh',
-        color: 'lightgreen',
-        textShadow: "3px 3px 3px black"
+        color: 'white',
+        textShadow: "3px 3px 3px rgba(0, 0, 0, 0.5)",
     };
 
-    const camoButtonStyle = {
-        background: 'url(https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F71mWIV3jo1L._AC_UF894%2C1000_QL80_.jpg&tbnid=Tsvtch_rDp6zzM&vet=12ahUKEwjggP-0yfSEAxU3K2IAHcSmAwkQMygGegUIARD_AQ..i&imgrefurl=https%3A%2F%2Fwww.amazon.com%2FWindham-Fabrics-0295842-Green-Fabric%2Fdp%2FB01B50CRWC&docid=hiOizd1kwso6QM&w=894&h=894&q=military%20camo&hl=en&ved=2ahUKEwjggP-0yfSEAxU3K2IAHcSmAwkQMygGegUIARD_AQ) repeat',
-        color: 'lightgreen',
+    const headerStyle = {
+        backgroundColor: 'rgba(30, 30, 30, 0.8)',
+        padding: '10px',
+        borderRadius: '5px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+    };
+
+    const buttonStyle = {
+        background: 'rgba(30, 30, 30, 0.8)',
+        color: 'white',
         padding: '10px 20px',
         border: 'none',
         borderRadius: '5px',
         cursor: 'pointer',
-        textShadow: '3px 3px 3px black'
+        textShadow: '3px 3px 3px rgba(0, 0, 0, 0.5)',
     };
 
     return (
         <ExplodeOnClick>
             <div className="container" style={containerStyle}>
                 <div className="content">
-                    <h1>Buffbunny Hop</h1>
-                    <h2>From Fluff To Buff</h2>
+                    <h1 style={headerStyle}>Buffbunny Hop</h1>
+                    <h2 style={headerStyle}>From Fluff To Buff</h2>
                 </div>
                 <div className="buttons-wrapper">
-                    <Link to="/login" className="btn btn-primary" style={camoButtonStyle}>
+                    <Link to="/login" className="btn btn-primary" style={buttonStyle}>
                         Login
                     </Link>
-                    <Link to="/signup" className="btn btn-secondary camo-button" style={camoButtonStyle}>
+                    <Link to="/signup" className="btn btn-secondary camo-button" style={buttonStyle}>
                         Sign Up
                     </Link>
                 </div>

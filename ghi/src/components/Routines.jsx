@@ -39,7 +39,7 @@ function Routines() {
                     <select className='form-select w-25' name="selectRoutine" id="selectRoutine"
                         onChange={(event) => handleSelectRoutine(event)}
                         >
-                        <option defaultValue>Select your Routine</option>
+                        <option defaultValue>Select Routine</option>
                         {allRoutines.map((routine, index) => (
                             <option key={index} value={routine.id}>{routine.name}</option>
                         ))}

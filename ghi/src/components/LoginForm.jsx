@@ -66,7 +66,7 @@ function LoginForm() {
             <input type="password" name="password" className="form-control" id="password" placeholder="Password" required value={formData.password} onChange={handleFormChange} />
             <label htmlFor="password">Password</label>
           </div>
-          <button type="submit" className="btn btn-primary">Hop On</button>
+          <button type="submit" className="btn btn-primary">Hop In</button>
         </form>
       </div>
     </div>

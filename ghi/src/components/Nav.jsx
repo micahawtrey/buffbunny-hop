@@ -27,7 +27,7 @@ function Nav() {
         <NavLink to={"/"}>
           <img src="/BUFFBunny_Hop_Logo-nobg.png" alt="A muscular bunny flexing above the company name" className='me-3' width={100}/>
         </NavLink>
-        <NavLink className="navbar-brand" to={"/"}>Buffbunny Hop</NavLink>
+        <NavLink className="navbar-brand" to={"/"}>BUFFBUNNY HOP</NavLink>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
