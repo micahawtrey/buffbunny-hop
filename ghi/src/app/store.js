@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-// import { loginReducer } from './loginSlice'
 import { accountApi } from './accountAPI'
 import { routineAPI } from './routineAPI'
 import { workoutAPI } from './workoutAPI'
@@ -13,7 +12,6 @@ export const store = configureStore({
         [workoutAPI.reducerPath]: workoutAPI.reducer,
         [exerciseAPI.reducerPath]: exerciseAPI.reducer,
         [recentWorkoutsAPI.reducerPath]: recentWorkoutsAPI.reducer,
-        // query: loginReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -25,4 +23,3 @@ export const store = configureStore({
             ),
 
 })
-

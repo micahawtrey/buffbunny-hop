@@ -364,14 +364,3 @@ Outputs:
   }
 ]
 ```
-
-## 3rd Party Gym Photos API
-
-- **Method**: `GET`
-- **Path**: `/api/photos_gym_api`
-
-Outputs:
-
-```json
-
-```

@@ -30,7 +30,6 @@ def details_exercise_api(
     name: str,
     queries: ExerciseApiQueries = Depends()
 ):
-    print(name)
     return queries.get_exercise_details_api(name=name)
 
 

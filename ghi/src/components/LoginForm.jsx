@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLoginMutation } from '../app/accountAPI';
 import { useNavigate } from 'react-router-dom';
-import buffBunnyLogo from './BUFFBunny_Hop_Logo-nobg.png'; // Ensure this path is correct
+import buffBunnyLogo from './BUFFBunny_Hop_Logo-nobg.png';
 
 function LoginForm() {
   const [login, { isSuccess, isError, error }] = useLoginMutation();

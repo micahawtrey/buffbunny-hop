@@ -1,11 +1,8 @@
 import os
 import requests
-from dotenv import load_dotenv
 
-# Load Environment Variables From The Root Level File
-load_dotenv()
 
-RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
+RAPID_API_KEY = os.environ["RAPID_API_KEY"]
 
 
 class ExerciseApiQueries:
@@ -15,7 +12,7 @@ class ExerciseApiQueries:
              'limit': limit
         }
         headers = {
-            'X-RapidAPI-Key': RAPIDAPI_KEY,
+            'X-RapidAPI-Key': RAPID_API_KEY,
             'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
         }
         res = requests.get(url, headers=headers, params=params)
@@ -25,7 +22,7 @@ class ExerciseApiQueries:
     def get_exercise_details_api(self, name: str):
         url = f'https://exercisedb.p.rapidapi.com/exercises/name/{name}'
         headers = {
-            'X-RapidAPI-Key': RAPIDAPI_KEY,
+            'X-RapidAPI-Key': RAPID_API_KEY,
             'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
         }
         res = requests.get(url, headers=headers)
@@ -35,10 +32,9 @@ class ExerciseApiQueries:
     def get_exercise_target_api(self, target: str):
         url = f'https://exercisedb.p.rapidapi.com/exercises/target/{target}'
         headers = {
-            'X-RapidAPI-Key': RAPIDAPI_KEY,
+            'X-RapidAPI-Key': RAPID_API_KEY,
             'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
         }
         res = requests.get(url, headers=headers)
         data = res.json()
-        print('HERE', data)
         return data

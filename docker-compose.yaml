@@ -8,13 +8,14 @@ services:
             DATABASE_URL: mongodb://example_user:secret@mongo
             DB_NAME: mongo
             CORS_HOST: http://localhost:5173
-            SIGNING_KEY: f8c7dcb73b3b8dff6b242c870e95f285ff3b3be284f666468d09e9e7cb4d1c36
+            RAPID_API_KEY: ${RAPID_API_KEY}
+            SIGNING_KEY: ${SIGNING_KEY}
         build:
             context: api
             dockerfile: Dockerfile.dev
         ports:
             - 8000:8000
-        user: "1000:1000" # on macOS and Linux, replace this with your real user id and group id
+        user: "1000:1000"
         volumes:
             - ./api:/app
 
@@ -22,14 +23,11 @@ services:
         image: node:lts-bullseye
         command: /bin/bash run.sh
         working_dir: /app
-        user: "1000:1000" # on macOS and Linux, replace this with your real user id and group id
+        user: "1000:1000"
         volumes:
             - ./ghi:/app
         environment:
             VITE_API_HOST: http://localhost:8000
-            VITE_NODE_ENV: development
-            VITE_HOST_OS: ${OS}
-            VITE_EXERCISE_DB_KEY: key
         ports:
             - "5173:5173"
 

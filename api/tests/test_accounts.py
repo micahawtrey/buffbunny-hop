@@ -24,15 +24,13 @@ def test_create_account():
 def test_duplicate_account():
     account_data = {
         "full_name": "test_name",
-        "username": "existing_username",  # Or "existing_email@example.com"
+        "username": "existing_username",
         "email": "email@example.com",
         "password": "password"
     }
 
-    # Create the original account (If not already in your database)
     response = client.post("/api/accounts", json=account_data)
 
-    # Attempt to create a duplicate
     response = client.post("/api/accounts", json=account_data)
 
     assert response.status_code == 400

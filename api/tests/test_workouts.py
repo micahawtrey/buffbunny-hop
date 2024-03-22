@@ -39,7 +39,6 @@ def test_create_workout():
     }
     res = client.post("/api/workouts", json=workout_in)
 
-    # Assert
     assert res.status_code == 200
     assert res.json() == {
         "name": "Workout A",

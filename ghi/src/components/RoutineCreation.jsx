@@ -5,7 +5,7 @@ import { useGetAllWorkoutsQuery } from '../app/workoutAPI';
 
 function RoutineCreation() {
     const navigate = useNavigate();
-    const [createRoutine, { isSuccess, isError, error }] = useCreateRoutineMutation();
+    const [createRoutine, isSuccess] = useCreateRoutineMutation();
     const { data: workouts, isLoading: isLoadingWorkouts, isError: isWorkoutsError } = useGetAllWorkoutsQuery();
     const [formData, setFormData] = useState({
         name: '',
@@ -20,7 +20,6 @@ function RoutineCreation() {
             workoutNum: 1
         }
     })
-    const [errorMessage, setErrorMessage] = useState("");
     const addNewWorkout = () => {
         const workoutKey = `workout${workoutNum}`
         setWorkoutList({
@@ -45,10 +44,8 @@ function RoutineCreation() {
     useEffect(() => {
         if (isSuccess) {
             navigate("/dashboard");
-        } else if (isError && error && 'data' in error) {
-            setErrorMessage(`Error: ${error.data.detail}`);
         }
-    }, [isSuccess, isError, error, navigate]);
+    }, [isSuccess, navigate]);
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
@@ -69,12 +66,10 @@ function RoutineCreation() {
 
     const handleSubmit = () => {
         const body = {...formData}
-        console.log(body)
         for (let workout of Object.values(workoutList)) {
             const workoutObject = workouts.find((queriedWorkout) => queriedWorkout["id"] == workout["workoutId"])
             body["workouts"].push(workoutObject)
         }
-        console.log({body})
         createRoutine(body);
     };
 

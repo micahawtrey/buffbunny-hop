@@ -4,7 +4,7 @@ import { useCreateWorkoutMutation } from '../app/workoutAPI';
 import { useGetExerciseApiListQuery } from '../app/exerciseAPI';
 
 function CreateWorkout (){
-    const { data: exerciseList, isLoading } = useGetExerciseApiListQuery()
+    const { data: exerciseList } = useGetExerciseApiListQuery()
     const targets = [
         "abductors",
         "abs",
@@ -40,7 +40,6 @@ function CreateWorkout (){
     })
     const [exerciseNum, setExerciseNum] = useState(1)
     const [workout, workoutStatus] = useCreateWorkoutMutation()
-    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
 
     const addNewExercise = () => {
@@ -91,7 +90,6 @@ function CreateWorkout (){
 
     useEffect(() => {
         if (workoutStatus.isSuccess) navigate("/dashboard")
-        if (workoutStatus.isError) setErrorMessage(workoutStatus.error)
     }, [workoutStatus, navigate])
 
     const filterMuscleGroup = async (data, exerciseKey) => {

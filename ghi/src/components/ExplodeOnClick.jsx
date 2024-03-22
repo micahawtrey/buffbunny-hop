@@ -1,4 +1,3 @@
-import React from 'react';
 import './ExplodeOnClick.css';
 
 const ExplodeOnClick = ({ children }) => {

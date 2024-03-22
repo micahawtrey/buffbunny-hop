@@ -1,4 +1,3 @@
-//@ts-check
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
@@ -7,7 +6,6 @@ import { store } from './app/store.js'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Exercise from './components/Exercise'
-import FilterExercises from './components/FilterExercises'
 import LoginForm from './components/LoginForm'
 import Main from './components/MainPage'
 import Routine from './components/Routines.jsx'
@@ -29,7 +27,6 @@ const router = createBrowserRouter([
             {path: "signup", element: <SignupForm />},
             {path: "dashboard", element: <UserDashboard />},
             {path: "exercises/:exercise_name", element: <Exercise />},
-            {path: "exercises/filter", element: <FilterExercises />},
             {path: "workouts/create", element: <CreateWorkout />},
             {path: "routines/", element: <Routine />},
             {path: "routines/create", element: <CreateRoutine />}

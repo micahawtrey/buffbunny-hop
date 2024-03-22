@@ -34,7 +34,6 @@ export const fetchRandomGymPictures = () => {
             return response.json();
         })
         .then(data => {
-            // Ensure data.photos exists and has content before mapping
             if (data.photos && data.photos.length > 0) {
                 const pictures = data.photos.map(photo => photo.src.medium);
                 dispatch(fetchGymPicturesSuccess(pictures));

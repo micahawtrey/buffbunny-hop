@@ -1,9 +1,6 @@
 import os
 import requests
-from dotenv import load_dotenv
 
-# Load Environment Variables From The Root Level File
-load_dotenv()
 
 PEXELS_KEY = os.getenv("PEXELS_KEY")
 
