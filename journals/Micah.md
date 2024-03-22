@@ -1,3 +1,10 @@
+## March 22, 2024
+
+Today I worked on:
+
+* Fixing all of the bits of broken code
+* Making the docs
+
 ## March 20, 2024
 
 Today, I worked on:
