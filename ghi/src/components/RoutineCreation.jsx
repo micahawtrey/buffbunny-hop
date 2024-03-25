@@ -5,7 +5,7 @@ import { useGetAllWorkoutsQuery } from '../app/workoutAPI';
 
 function RoutineCreation() {
     const navigate = useNavigate();
-    const [createRoutine, isSuccess] = useCreateRoutineMutation();
+    const [createRoutine, createRoutineStatus] = useCreateRoutineMutation();
     const { data: workouts, isLoading: isLoadingWorkouts, isError: isWorkoutsError } = useGetAllWorkoutsQuery();
     const [formData, setFormData] = useState({
         name: '',
@@ -42,10 +42,10 @@ function RoutineCreation() {
     }
 
     useEffect(() => {
-        if (isSuccess) {
+        if (createRoutineStatus.isSuccess) {
             navigate("/dashboard");
         }
-    }, [isSuccess, navigate]);
+    }, [createRoutineStatus, navigate]);
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
