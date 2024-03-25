@@ -11,7 +11,7 @@ From fluff to buff!
 
  - [API Design](docs/api.md)
  - [Data Model](docs/data-model.md)
- - [GHI](docs/GHI Page Layouts.md)
+ - [GHI](docs/GHI Page Layouts.png)
 
 ## Intended Market
 
